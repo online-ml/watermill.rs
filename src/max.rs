@@ -1,4 +1,4 @@
-use num::Float;
+use num::{Float, FromPrimitive};
 
 /// Running max.
 /// # Examples
@@ -12,11 +12,11 @@ use num::Float;
 /// ```
 ///
 #[derive(Default, Debug)]
-pub struct Max<F: Float> {
+pub struct Max<F: Float + FromPrimitive> {
     pub max: F,
 }
 
-impl<F: Float> Max<F> {
+impl<F: Float + FromPrimitive> Max<F> {
     pub fn new() -> Self {
         Self {
             max: F::min_value(),

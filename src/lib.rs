@@ -1,3 +1,4 @@
+pub mod count;
 pub mod max;
 pub mod min;
 
