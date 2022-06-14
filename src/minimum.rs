@@ -1,6 +1,6 @@
 use crate::traits::OnlineStatistic;
 use num::{Float, FromPrimitive};
-
+use std::ops::AddAssign;
 /// Running min.
 /// # Examples
 /// ```
@@ -13,12 +13,12 @@ use num::{Float, FromPrimitive};
 /// assert_eq!(running_min.get(), 1.0);
 /// ```
 ///
-#[derive(Default, Debug)]
-pub struct Min<F: Float + FromPrimitive> {
+#[derive(Clone, Copy, Default, Debug)]
+pub struct Min<F: Float + FromPrimitive + AddAssign> {
     pub min: F,
 }
 
-impl<F: Float + FromPrimitive> Min<F> {
+impl<F: Float + FromPrimitive + AddAssign> Min<F> {
     pub fn new() -> Self {
         Self {
             min: F::max_value(),
@@ -26,7 +26,7 @@ impl<F: Float + FromPrimitive> Min<F> {
     }
 }
 
-impl<F: Float + FromPrimitive> OnlineStatistic<F> for Min<F> {
+impl<F: Float + FromPrimitive + AddAssign> OnlineStatistic<F> for Min<F> {
     fn update(&mut self, x: F) {
         if self.min > x {
             self.min = x;

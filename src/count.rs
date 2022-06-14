@@ -1,5 +1,5 @@
 use num::{Float, FromPrimitive};
-
+use std::ops::AddAssign;
 /// Running count.
 /// # Examples
 /// ```
@@ -11,12 +11,12 @@ use num::{Float, FromPrimitive};
 /// assert_eq!(running_count.get(), 9.0);
 /// ```
 ///
-#[derive(Default, Debug)]
-pub struct Count<F: Float + FromPrimitive> {
+#[derive(Copy, Clone, Default, Debug)]
+pub struct Count<F: Float + FromPrimitive + AddAssign> {
     pub count: F,
 }
 
-impl<F: Float + FromPrimitive> Count<F> {
+impl<F: Float + FromPrimitive + AddAssign> Count<F> {
     pub fn new() -> Self {
         Self {
             count: F::from_f64(0.0).unwrap(),
@@ -24,7 +24,7 @@ impl<F: Float + FromPrimitive> Count<F> {
     }
     #[warn(unused_variables)]
     pub fn update(&mut self, _x: F) {
-        self.count = self.count + F::from_f64(1.).unwrap();
+        self.count += F::from_f64(1.).unwrap();
     }
     pub fn get(self) -> F {
         self.count

@@ -1,5 +1,6 @@
 pub mod count;
 pub mod maximum;
+pub mod mean;
 pub mod minimum;
 pub mod traits;
 #[cfg(test)]
