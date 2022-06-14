@@ -1,4 +1,5 @@
 pub mod max;
+pub mod min;
 
 #[cfg(test)]
 mod tests {
