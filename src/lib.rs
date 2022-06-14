@@ -1,7 +1,7 @@
 pub mod count;
-pub mod max;
-pub mod min;
-
+pub mod maximum;
+pub mod minimum;
+pub mod traits;
 #[cfg(test)]
 mod tests {
     #[test]
