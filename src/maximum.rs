@@ -1,12 +1,12 @@
-use crate::traits::OnlineStatistic;
+use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
-use std::ops::AddAssign;
+use std::ops::{AddAssign, SubAssign};
 
 /// Running max.
 /// # Examples
 /// ```
 /// use online_statistics::maximum::Max;
-/// use online_statistics::traits::OnlineStatistic;
+/// use online_statistics::traits::Univariate;
 /// let mut running_max: Max<f64> = Max::new();
 /// for i in 1..10{
 ///     running_max.update(i as f64);
@@ -15,10 +15,10 @@ use std::ops::AddAssign;
 /// ```
 ///
 #[derive(Clone, Copy, Default, Debug)]
-pub struct Max<F: Float + FromPrimitive + AddAssign> {
+pub struct Max<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub max: F,
 }
-impl<F: Float + FromPrimitive + AddAssign> Max<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Max<F> {
     pub fn new() -> Self {
         Self {
             max: F::min_value(),
@@ -26,7 +26,7 @@ impl<F: Float + FromPrimitive + AddAssign> Max<F> {
     }
 }
 
-impl<F: Float + FromPrimitive + AddAssign> OnlineStatistic<F> for Max<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Max<F> {
     fn update(&mut self, x: F) {
         if self.max < x {
             self.max = x;
@@ -41,7 +41,7 @@ impl<F: Float + FromPrimitive + AddAssign> OnlineStatistic<F> for Max<F> {
 /// # Examples
 /// ```
 /// use online_statistics::maximum::AbsMax;
-/// use online_statistics::traits::OnlineStatistic;
+/// use online_statistics::traits::Univariate;
 /// let mut running_abs_max: AbsMax<f64> = AbsMax::new();
 /// for i in -17..10{
 ///     running_abs_max.update(i as f64);
@@ -50,11 +50,11 @@ impl<F: Float + FromPrimitive + AddAssign> OnlineStatistic<F> for Max<F> {
 /// ```
 ///
 #[derive(Default, Debug)]
-pub struct AbsMax<F: Float + FromPrimitive + AddAssign> {
+pub struct AbsMax<F: Float + FromPrimitive + AddAssign + SubAssign> {
     abs_max: F,
 }
 
-impl<F: Float + FromPrimitive + AddAssign> AbsMax<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> AbsMax<F> {
     pub fn new() -> Self {
         Self {
             abs_max: F::from_f64(0.0).unwrap(),
@@ -62,7 +62,7 @@ impl<F: Float + FromPrimitive + AddAssign> AbsMax<F> {
     }
 }
 
-impl<F: Float + FromPrimitive + AddAssign> OnlineStatistic<F> for AbsMax<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for AbsMax<F> {
     fn update(&mut self, x: F) {
         if self.abs_max < x.abs() {
             self.abs_max = x.abs();
