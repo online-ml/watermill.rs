@@ -1,7 +1,9 @@
 pub mod count;
+pub mod kurtosis;
 pub mod maximum;
 pub mod mean;
 pub mod minimum;
+pub mod moments;
 pub mod traits;
 pub mod variance;
 #[cfg(test)]
