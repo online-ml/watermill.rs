@@ -62,8 +62,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
             self.heights[0] = x;
             k = Some(1);
         } else {
-            println!("hello");
-            println!("{}", self.heights.len());
             for i in 1..=4 {
                 if self.heights[i - 1] <= x && x < self.heights[i] {
                     k = Some(i);
