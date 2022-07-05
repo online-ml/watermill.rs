@@ -3,9 +3,9 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::traits::Univariate;
 
-/// Running variance using Belford Algorithm.
+/// Running quantile estimator using P-square Algorithm.
 /// # Arguments
-/// * `ddof` - Delta Degrees of Freedom. The divisor used in calculations is `n - ddof`, where `n` represents the number of seen elements.
+/// * `q` - quantile value. **WARNING** Should between `0` and `1`.
 /// # Examples
 /// ```
 /// use online_statistics::quantile::Quantile;
@@ -18,9 +18,9 @@ use crate::traits::Univariate;
 /// assert_eq!(running_quantile.get(), 5.0);
 /// ```
 /// # References
-/// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
+/// [^1]: [The P² Algorithm for Dynamic Univariateal Computing Calculation of Quantiles and Editor Histograms Without Storing Observations](https://www.cse.wustl.edu/~jain/papers/ftp/psqr.pdf)
 ///
-/// [^2]: [Chan, T.F., Golub, G.H. and LeVeque, R.J., 1983. Algorithms for computing the sample variance: Analysis and recommendations. The American Statistician, 37(3), pp.242-247.](https://amstat.tandfonline.com/doi/abs/10.1080/00031305.1983.10483115)
+/// [^2]: [P² quantile estimator: estimating the median without storing values](https://aakinshin.net/posts/p2-quantile-estimator/)
 #[derive(Clone, Debug)]
 pub struct Quantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     q: F,
