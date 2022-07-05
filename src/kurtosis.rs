@@ -69,7 +69,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Kurtosi
         self.central_moments.update_m3();
         self.central_moments.update_m2();
     }
-    fn get(self) -> F {
+    fn get(&mut self) -> F {
         let n = self.central_moments.count.get();
         let mut kurtosis: F = F::from_f64(0.).unwrap();
         if self.central_moments.m2 != F::from_f64(0.).unwrap() {

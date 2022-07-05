@@ -40,7 +40,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Mean<F>
         self.n.update(x);
         self.mean += (F::from_f64(1.).unwrap() / self.n.get()) * (x - self.mean);
     }
-    fn get(self) -> F {
+    fn get(&mut self) -> F {
         self.mean
     }
 }

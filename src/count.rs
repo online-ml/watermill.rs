@@ -26,7 +26,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Count<F> {
     pub fn update(&mut self, _x: F) {
         self.count += F::from_f64(1.).unwrap();
     }
-    pub fn get(self) -> F {
+    pub fn get(&mut self) -> F {
         self.count
     }
 }

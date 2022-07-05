@@ -58,7 +58,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Varianc
         let mean_new = self.mean.get();
         self.state -= (x - mean_old) * (x - mean_new);
     }
-    fn get(self) -> F {
+    fn get(&mut self) -> F {
         let mean_n = self.mean.n.get();
         if mean_n > F::from_u32(self.ddof).unwrap() {
             return self.state / (mean_n - F::from_u32(self.ddof).unwrap());

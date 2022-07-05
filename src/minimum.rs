@@ -32,7 +32,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Min<F> 
             self.min = x;
         }
     }
-    fn get(self) -> F {
+    fn get(&mut self) -> F {
         self.min
     }
 }
