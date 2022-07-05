@@ -69,8 +69,10 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
                 }
             }
             // If k is None it means that the previous loop did not break
-            if (*self.heights.last_mut().unwrap() < x) && k.is_none() {
-                *self.heights.last_mut().unwrap() = x;
+            if let (Some(last_height), None) = (self.heights.last_mut(), k) {
+                if *last_height < x {
+                    *last_height = x;
+                }
             }
         }
         k.unwrap_or(4)
