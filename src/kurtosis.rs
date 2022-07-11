@@ -35,8 +35,8 @@ use crate::traits::Univariate;
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
 #[derive(Clone, Copy, Debug)]
 pub struct Kurtosis<F: Float + FromPrimitive + AddAssign + SubAssign> {
-    pub central_moments: CentralMoments<F>,
     pub bias: bool,
+    pub central_moments: CentralMoments<F>,
 }
 impl<F: Float + FromPrimitive + AddAssign + SubAssign> Kurtosis<F> {
     pub fn new(bias: bool) -> Self {
