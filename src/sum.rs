@@ -1,8 +1,10 @@
+use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 /// Running sum.
 /// # Examples
 /// ```
+/// use online_statistucs::traits::Univariate;
 /// use online_statistics::sum::Sum;
 /// let mut running_sum: Sum<f64> = Sum::new();
 /// for i in 1..10{
@@ -22,11 +24,12 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Sum<F> {
             sum: F::from_f64(0.0).unwrap(),
         }
     }
-    #[warn(unused_variables)]
-    pub fn update(&mut self, x: F) {
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Sum<F> {
+    fn update(&mut self, x: F) {
         self.sum += x;
     }
-    pub fn get(&mut self) -> F {
+    fn get(&mut self) -> F {
         self.sum
     }
 }
