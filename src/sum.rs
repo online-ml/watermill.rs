@@ -4,7 +4,7 @@ use std::ops::{AddAssign, SubAssign};
 /// Running sum.
 /// # Examples
 /// ```
-/// use online_statistucs::traits::Univariate;
+/// use online_statistics::traits::Univariate;
 /// use online_statistics::sum::Sum;
 /// let mut running_sum: Sum<f64> = Sum::new();
 /// for i in 1..10{
