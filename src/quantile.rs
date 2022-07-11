@@ -14,6 +14,7 @@ use crate::traits::Univariate;
 /// let mut running_quantile: Quantile<f64> = Quantile::new(0.5);
 /// for x in data.iter(){
 ///     running_quantile.update(*x as f64);
+///     println!("{}", running_quantile.get());
 /// }
 /// assert_eq!(running_quantile.get(), 5.0);
 /// ```
@@ -157,7 +158,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 .unwrap();
 
             self.heights[index]
-            // TODO: Handle call get during the first value of the stream
         }
     }
 }
