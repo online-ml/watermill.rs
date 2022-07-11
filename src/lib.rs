@@ -6,8 +6,10 @@ pub mod maximum;
 pub mod mean;
 pub mod minimum;
 pub mod moments;
+pub mod ptp;
 pub mod quantile;
 pub mod skew;
+pub mod sum;
 pub mod traits;
 pub mod variance;
 #[cfg(test)]
