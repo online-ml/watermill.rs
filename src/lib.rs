@@ -1,6 +1,7 @@
 pub mod count;
 pub mod ewmean;
 pub mod ewvariance;
+pub mod iqr;
 pub mod kurtosis;
 pub mod maximum;
 pub mod mean;
