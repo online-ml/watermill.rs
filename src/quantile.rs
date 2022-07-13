@@ -5,16 +5,17 @@ use crate::traits::Univariate;
 
 /// Running quantile estimator using P-square Algorithm.
 /// # Arguments
-/// * `q` - quantile value. **WARNING** Should between `0` and `1`.
+/// * `q` - quantile value. **WARNING** Should between `0` and `1`. Defaults to `0.5`.
 /// # Examples
 /// ```
 /// use online_statistics::quantile::Quantile;
 /// use online_statistics::traits::Univariate;
-/// let data = vec![9.,7.,3.,2.,5.,6.,1.,8.,4.];
-/// let mut running_quantile: Quantile<f64> = Quantile::new(0.5);
+/// let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
+/// let mut running_quantile: Quantile<f64> = Quantile::default();
 /// for x in data.iter(){
 ///     running_quantile.update(*x as f64);
-///     println!("{}", running_quantile.get());
+///     //println!("{}", running_quantile.get());
+///     running_quantile.get();
 /// }
 /// assert_eq!(running_quantile.get(), 5.0);
 /// ```
@@ -32,11 +33,11 @@ pub struct Quantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     heights_sorted: bool,
 }
 impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
-    pub fn new(q: F) -> Self {
+    pub fn new(q: F) -> Result<Self, &'static str> {
         if F::from_f64(0.).unwrap() > q && F::from_f64(1.).unwrap() < q {
-            panic!("q should be betweek 0 and 1");
+            return Err("q should be betweek 0 and 1");
         }
-        Self {
+        Ok(Self {
             q,
             desired_marker_position: vec![
                 F::from_f64(0.).unwrap(),
@@ -52,10 +53,10 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
                 F::from_f64(3.).unwrap() + F::from_f64(2.).unwrap() * q,
                 F::from_f64(5.).unwrap(),
             ],
-            position: (1..6).map(|x| F::from_i32(x).unwrap()).collect(),
+            position: (1..=5).map(|x| F::from_i32(x).unwrap()).collect(),
             heights: Vec::new(),
             heights_sorted: false,
-        }
+        })
     }
     fn find_k(&mut self, x: F) -> usize {
         let mut k: Option<usize> = None;
@@ -80,7 +81,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
     }
     fn compute_p2(qp1: F, q: F, qm1: F, d: F, np1: F, n: F, nm1: F) -> F {
         let outer = d / (np1 - nm1);
-        let inner_left = (n - nm1 + d) * (qp1 - d) / (np1 - n);
+        let inner_left = (n - nm1 + d) * (qp1 - q) / (np1 - n);
         let inner_right = (np1 - n - d) * (q - qm1) / (n - nm1);
         q + outer * (inner_left + inner_right)
     }
@@ -89,13 +90,16 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
         for i in 1..4 {
             let n = self.position[i];
             let q = self.heights[i];
+
             let mut d = self.marker_position[i] - n;
-            if (d >= F::from_f64(1.0).unwrap() && self.position[i] - n > F::from_f64(1.0).unwrap())
+            if (d >= F::from_f64(1.0).unwrap()
+                && self.position[i + 1] - n > F::from_f64(1.0).unwrap())
                 || (d <= F::from_f64(-1.).unwrap()
                     && self.position[i - 1] - n < F::from_f64(-1.).unwrap())
             {
-                d = d.copysign(F::from_f64(1.).unwrap());
+                // d = d.copysign(F::from_f64(1.).unwrap());
 
+                d = F::from_f64(1.).unwrap().copysign(d);
                 let qp1 = self.heights[i + 1];
                 let qm1 = self.heights[i - 1];
                 let np1 = self.position[i + 1];
@@ -106,11 +110,40 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
                 if qm1 < qn && qn < qp1 {
                     self.heights[i] = qn;
                 } else {
-                    self.heights[i] = q + d * (self.heights[i - d.to_usize().unwrap()] - q)
+                    self.heights[i] = q + d * (self.heights[i + d.to_usize().unwrap()] - q)
                         / (self.position[i + d.to_usize().unwrap()] - n);
                 }
                 self.position[i] = n + d;
             }
+        }
+    }
+}
+
+impl<F> Default for Quantile<F>
+where
+    F: Float + FromPrimitive + AddAssign + SubAssign,
+{
+    fn default() -> Self {
+        let q = F::from_f64(0.5).unwrap();
+        Self {
+            q,
+            desired_marker_position: vec![
+                F::from_f64(0.).unwrap(),
+                q / F::from_f64(2.).unwrap(),
+                q,
+                (F::from_f64(1.).unwrap() + q) / F::from_f64(2.).unwrap(),
+                F::from_f64(1.).unwrap(),
+            ],
+            marker_position: vec![
+                F::from_f64(1.).unwrap(),
+                F::from_f64(1.).unwrap() + F::from_f64(2.).unwrap() * q,
+                F::from_f64(1.).unwrap() + F::from_f64(4.).unwrap() * q,
+                F::from_f64(3.).unwrap() + F::from_f64(2.).unwrap() * q,
+                F::from_f64(5.).unwrap(),
+            ],
+            position: (1..6).map(|x| F::from_i32(x).unwrap()).collect(),
+            heights: Vec::new(),
+            heights_sorted: false,
         }
     }
 }
@@ -156,7 +189,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 .min(length * self.q)
                 .to_usize()
                 .unwrap();
-
             self.heights[index]
         }
     }
