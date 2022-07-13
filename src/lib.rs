@@ -1,4 +1,5 @@
 pub mod count;
+pub mod covariance;
 pub mod ewmean;
 pub mod ewvariance;
 pub mod iqr;
