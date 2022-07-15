@@ -1,3 +1,4 @@
+use crate::sorted_window::SortedWindow;
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
@@ -70,5 +71,40 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for AbsMax<
     }
     fn get(&mut self) -> F {
         self.abs_max
+    }
+}
+
+/// Rolling max.
+/// # Arguments
+/// * `window_size` - Size of the rolling window.
+/// # Examples
+/// ```
+/// use online_statistics::maximum::RollingMax;
+/// use online_statistics::traits::Univariate;
+/// let mut rolling_max: RollingMax<f64> = RollingMax::new(3);
+/// for i in 1..10{
+///     rolling_max.update(i as f64);
+/// }
+/// assert_eq!(rolling_max.get(), 9.0);
+/// ```
+///
+pub struct RollingMax<F: Float + FromPrimitive + AddAssign + SubAssign> {
+    sorted_window: SortedWindow<F>,
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingMax<F> {
+    pub fn new(window_size: usize) -> Self {
+        Self {
+            sorted_window: SortedWindow::new(window_size),
+        }
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for RollingMax<F> {
+    fn update(&mut self, x: F) {
+        self.sorted_window.push_back(x);
+    }
+    fn get(&mut self) -> F {
+        self.sorted_window.back()
     }
 }
