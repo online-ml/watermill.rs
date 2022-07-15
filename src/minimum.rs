@@ -1,3 +1,4 @@
+use crate::sorted_window::SortedWindow;
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
@@ -34,5 +35,38 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Min<F> 
     }
     fn get(&mut self) -> F {
         self.min
+    }
+}
+
+/// Rolling min.
+/// # Examples
+/// ```
+/// use online_statistics::minimum::RollingMin;
+/// use online_statistics::traits::Univariate;
+/// let mut rolling_min: RollingMin<f64> = RollingMin::new(3);
+/// for i in 1..10{
+///     rolling_min.update(i as f64);
+/// }
+/// assert_eq!(rolling_min.get(), 7.0);
+/// ```
+///
+pub struct RollingMin<F: Float + FromPrimitive + AddAssign + SubAssign> {
+    sorted_window: SortedWindow<F>,
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingMin<F> {
+    pub fn new(window_size: usize) -> Self {
+        Self {
+            sorted_window: SortedWindow::new(window_size),
+        }
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for RollingMin<F> {
+    fn update(&mut self, x: F) {
+        self.sorted_window.push_back(x);
+    }
+    fn get(&mut self) -> F {
+        self.sorted_window.front()
     }
 }
