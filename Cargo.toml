@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 num = "0.4.0"
+ordered-float = "3.0.0"
 
 [profile.dev]
 opt-level = 0

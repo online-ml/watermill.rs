@@ -11,6 +11,7 @@ pub mod moments;
 pub mod ptp;
 pub mod quantile;
 pub mod skew;
+mod sorted_window;
 pub mod sum;
 pub mod traits;
 pub mod variance;
