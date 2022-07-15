@@ -3,6 +3,8 @@ use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 /// Running min.
+/// # Arguments
+/// * `window_size` - Size of the rolling window.
 /// # Examples
 /// ```
 /// use online_statistics::minimum::Min;
