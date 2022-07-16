@@ -1,3 +1,4 @@
+use crate::sorted_window::SortedWindow;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
@@ -191,5 +192,78 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 .unwrap();
             self.heights[index]
         }
+    }
+}
+
+/// Rolling quantile.
+/// # Arguments
+/// * `q` - quantile value. **WARNING** Should between `0` and `1`.
+/// * `window_size` - Size of the rolling window.
+/// # Examples
+/// ```
+/// use online_statistics::quantile::RollingQuantile;
+/// use online_statistics::traits::Univariate;
+/// let mut rolling_quantile: RollingQuantile<f64> = RollingQuantile::new(0.5_f64, 101).unwrap();
+/// for i in 0..=100{
+///     rolling_quantile.update(i as f64);
+/// }
+/// assert_eq!(rolling_quantile.get(), 50.0);
+/// ```
+///
+pub struct RollingQuantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
+    sorted_window: SortedWindow<F>,
+    q: F,
+    window_size: usize,
+    lower: usize,
+    higher: usize,
+    frac: F,
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingQuantile<F> {
+    pub fn new(q: F, window_size: usize) -> Result<Self, &'static str> {
+        if F::from_f64(0.).unwrap() > q && F::from_f64(1.).unwrap() < q {
+            return Err("q should be betweek 0 and 1");
+        }
+        let idx = q * (F::from_usize(window_size).unwrap() - F::from_f64(1.).unwrap());
+        let lower = idx.floor().to_usize().unwrap();
+        let mut higher = lower + 1;
+        if higher > window_size - 1 {
+            higher = lower - 1;
+        }
+
+        let frac = idx - F::from_usize(lower).unwrap();
+        Ok(Self {
+            sorted_window: SortedWindow::new(window_size),
+            q,
+            window_size,
+            lower,
+            higher,
+            frac,
+        })
+    }
+    fn prepare(&self) -> (usize, usize, F) {
+        if self.sorted_window.len() < self.window_size {
+            let idx = self.q
+                * (F::from_usize(self.sorted_window.len()).unwrap() - F::from_f64(-1.).unwrap());
+            let lower = idx.floor().to_usize().unwrap();
+            let mut higher = lower + 1;
+            if higher > self.sorted_window.len() - 1 {
+                higher = self.sorted_window.len() - 1;
+            }
+
+            let frac = idx - F::from_usize(lower).unwrap();
+            return (lower, higher, frac);
+        }
+        (self.lower, self.higher, self.frac)
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for RollingQuantile<F> {
+    fn update(&mut self, x: F) {
+        self.sorted_window.push_back(x);
+    }
+    fn get(&mut self) -> F {
+        let (lower, higher, frac) = self.prepare();
+        self.sorted_window[lower] + (self.sorted_window[higher] - self.sorted_window[lower]) * frac
     }
 }
