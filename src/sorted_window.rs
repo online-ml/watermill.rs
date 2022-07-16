@@ -21,9 +21,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> SortedWindow<F> {
     pub fn len(&self) -> usize {
         self.sorted_window.len()
     }
-    pub fn capacity(&self) -> usize {
-        self.window_size
-    }
+
     pub fn front(&self) -> F {
         self.sorted_window
             .front()
