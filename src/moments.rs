@@ -2,6 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
+use crate::traits::Univariate;
 
 /// Computes central moments using Welford's algorithm.
 /// # References

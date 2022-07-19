@@ -5,6 +5,7 @@ use crate::traits::{Rollable, RollableUnivariate, Univariate};
 /// Running count.
 /// # Examples
 /// ```
+/// use online_statistics::traits::Univariate;
 /// use online_statistics::count::Count;
 /// let mut running_count: Count<f64> = Count::new();
 /// for i in 1..10{
