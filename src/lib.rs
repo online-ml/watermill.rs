@@ -10,6 +10,7 @@ pub mod minimum;
 pub mod moments;
 pub mod ptp;
 pub mod quantile;
+pub mod rolling;
 pub mod skew;
 mod sorted_window;
 pub mod sum;
