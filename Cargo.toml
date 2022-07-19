@@ -7,6 +7,9 @@ edition = "2021"
 num = "0.4.0"
 ordered-float = "3.0.0"
 
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
 [profile.dev]
 opt-level = 0
 
