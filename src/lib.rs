@@ -25,9 +25,9 @@
 //!
 //!## Installation
 //!Add the following line to your `cargo.toml`:
-//!```
+//!```bash
 //![dependencies]
-//!online-statistics = "0.1.0"
+//! online-statistics = "0.1.0"
 //!```
 //!## Inspiration
 //!The `stats` module of the [`river`](https://github.com/online-ml/river) library in `Python` greatly inspired this crate.
