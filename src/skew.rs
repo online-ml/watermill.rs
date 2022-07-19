@@ -3,7 +3,7 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::moments::CentralMoments;
 use crate::traits::Univariate;
-
+use serde::{Deserialize, Serialize};
 /// Running Skew.
 /// # Arguments
 /// * `bias` - If `false`, then the calculations are corrected for statistical bias.
@@ -33,7 +33,7 @@ use crate::traits::Univariate;
 /// ```
 /// # References
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Skew<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub central_moments: CentralMoments<F>,
     pub bias: bool,

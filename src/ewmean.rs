@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::traits::Univariate;
-
+use serde::{Deserialize, Serialize};
 /// Exponentially weighted mean.
 /// # Arguments
 /// * `alpha` - The closer `alpha` is to 1 the more the statistic will adapt to recent values. Default value is `0.5`.
@@ -21,7 +21,7 @@ use crate::traits::Univariate;
 /// [^1]: [Finch, T., 2009. Incremental calculation of weighted mean and variance. University of Cambridge, 4(11-5), pp.41-42.](https://fanf2.user.srcf.net/hermes/doc/antiforgery/stats.pdf)
 ///
 /// [^2]: [Exponential Moving Average on Streaming Data](https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl)
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct EWMean<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub mean: F,
     pub alpha: F,

@@ -3,7 +3,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::traits::Univariate;
-
+use serde::{Deserialize, Serialize};
 /// Running quantile estimator using P-square Algorithm.
 /// # Arguments
 /// * `q` - quantile value. **WARNING** Should between `0` and `1`. Defaults to `0.5`.
@@ -24,7 +24,7 @@ use crate::traits::Univariate;
 /// [^1]: [The P² Algorithm for Dynamic Univariateal Computing Calculation of Quantiles and Editor Histograms Without Storing Observations](https://www.cse.wustl.edu/~jain/papers/ftp/psqr.pdf)
 ///
 /// [^2]: [P² quantile estimator: estimating the median without storing values](https://aakinshin.net/posts/p2-quantile-estimator/)
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Quantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     q: F,
     desired_marker_position: Vec<F>,
@@ -208,6 +208,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
 /// assert_eq!(rolling_quantile.get(), 50.0);
 /// ```
 ///
+
 pub struct RollingQuantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     sorted_window: SortedWindow<F>,
     q: F,

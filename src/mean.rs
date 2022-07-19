@@ -3,6 +3,7 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
 use crate::traits::{Rollable, RollableUnivariate, Univariate};
+use serde::{Deserialize, Serialize};
 
 /// Running mean.
 /// # Examples
@@ -21,7 +22,7 @@ use crate::traits::{Rollable, RollableUnivariate, Univariate};
 /// [^2]: [Finch, T., 2009. Incremental calculation of weighted mean and variance. University of Cambridge, 4(11-5), pp.41-42.](https://fanf2.user.srcf.net/hermes/doc/antiforgery/stats.pdf)
 ///
 /// [^3]: [Chan, T.F., Golub, G.H. and LeVeque, R.J., 1983. Algorithms for computing the sample variance: Analysis and recommendations. The American Statistician, 37(3), pp.242-247.](https://amstat.tandfonline.com/doi/abs/10.1080/00031305.1983.10483115)
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
 pub struct Mean<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub mean: F,
     pub n: Count<F>,

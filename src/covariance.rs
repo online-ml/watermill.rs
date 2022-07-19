@@ -3,7 +3,7 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::mean::Mean;
 use crate::traits::{Bivariate, Univariate};
-
+use serde::{Deserialize, Serialize};
 /// Running Covariance.
 /// # Examples
 /// ```
@@ -21,7 +21,7 @@ use crate::traits::{Bivariate, Univariate};
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
 ///
 /// [^2]: Schubert, E. and Gertz, M., 2018, July. Numerically stable parallel computation of (co-) variance. In Proceedings of the 30th International Conference on Scientific and Statistical Database Management (pp. 1-12).
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Covariance<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub ddof: u32,
     pub mean_x: Mean<F>,

@@ -1,8 +1,8 @@
-use num::{Float, FromPrimitive};
-use std::ops::{AddAssign, SubAssign};
-
 use crate::ewmean::EWMean;
 use crate::traits::Univariate;
+use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
+use std::ops::{AddAssign, SubAssign};
 
 /// Exponentially weighted variance.
 /// # Arguments
@@ -22,7 +22,7 @@ use crate::traits::Univariate;
 /// [^1]: [Finch, T., 2009. Incremental calculation of weighted Var and variance. University of Cambridge, 4(11-5), pp.41-42.](https://fanf2.user.srcf.net/hermes/doc/antiforgery/stats.pdf)
 ///
 /// [^2]: [Exponential Moving Average on Streaming Data](https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl)
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct EWVariance<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub mean: EWMean<F>,
     pub sq_mean: EWMean<F>,

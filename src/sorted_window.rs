@@ -4,6 +4,7 @@ use std::{
     collections::VecDeque,
     ops::{AddAssign, Index, SubAssign},
 };
+
 pub(crate) struct SortedWindow<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub(crate) sorted_window: VecDeque<NotNan<F>>,
     pub(crate) unsorted_window: VecDeque<F>,

@@ -1,5 +1,6 @@
 use crate::traits::{Rollable, RollableUnivariate, Univariate};
 use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
 /// Running sum.
 /// # Examples
@@ -13,7 +14,7 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_sum.get(), 45.0);
 /// ```
 ///
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
 pub struct Sum<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub sum: F,
 }

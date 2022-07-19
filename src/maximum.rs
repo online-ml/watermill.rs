@@ -1,8 +1,8 @@
 use crate::sorted_window::SortedWindow;
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
-
 /// Running max.
 /// # Examples
 /// ```
@@ -15,7 +15,7 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_max.get(), 9.0);
 /// ```
 ///
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
 pub struct Max<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub max: F,
 }

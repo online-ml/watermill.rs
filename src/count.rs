@@ -2,6 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::traits::{Rollable, RollableUnivariate, Univariate};
+use serde::{Deserialize, Serialize};
 /// Running count.
 /// # Examples
 /// ```
@@ -14,7 +15,7 @@ use crate::traits::{Rollable, RollableUnivariate, Univariate};
 /// assert_eq!(running_count.get(), 9.0);
 /// ```
 ///
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
 pub struct Count<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub count: F,
 }

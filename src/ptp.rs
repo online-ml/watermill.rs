@@ -2,6 +2,7 @@ use crate::maximum::{Max, RollingMax};
 use crate::minimum::{Min, RollingMin};
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
 /// Running peak to peak (max - min).
 /// # Examples
@@ -15,7 +16,7 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_peak_to_peak.get(), 8.0);
 /// ```
 ///
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
 pub struct PeakToPeak<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub min: Min<F>,
     pub max: Max<F>,

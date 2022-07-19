@@ -3,11 +3,11 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
 use crate::traits::Univariate;
-
+use serde::{Deserialize, Serialize};
 /// Computes central moments using Welford's algorithm.
 /// # References
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
 pub struct CentralMoments<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub delta: F,
     pub sum_delta: F,

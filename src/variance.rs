@@ -3,7 +3,7 @@ use std::ops::{AddAssign, SubAssign};
 
 use crate::mean::Mean;
 use crate::traits::{Rollable, RollableUnivariate, Univariate};
-
+use serde::{Deserialize, Serialize};
 /// Running variance using Belford Algorithm.
 /// # Arguments
 /// * `ddof` - Delta Degrees of Freedom. The divisor used in calculations is `n - ddof`, where `n` represents the number of seen elements.
@@ -22,7 +22,7 @@ use crate::traits::{Rollable, RollableUnivariate, Univariate};
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
 ///
 /// [^2]: [Chan, T.F., Golub, G.H. and LeVeque, R.J., 1983. Algorithms for computing the sample variance: Analysis and recommendations. The American Statistician, 37(3), pp.242-247.](https://amstat.tandfonline.com/doi/abs/10.1080/00031305.1983.10483115)
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Variance<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub mean: Mean<F>,
     pub ddof: u32,

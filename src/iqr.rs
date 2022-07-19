@@ -2,8 +2,8 @@ use crate::quantile::Quantile;
 
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
-
 /// Computes the interquartile range.
 /// /// # Arguments
 /// * `q_inf` - Desired inferior quantile, must be between 0 and 1. Defaults to `0.25`.
@@ -19,7 +19,7 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_iqr.get(), 50.0);
 /// ```
 ///
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct IQR<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub q_inf: Quantile<F>,
     pub q_sup: Quantile<F>,

@@ -1,6 +1,7 @@
 use crate::sorted_window::SortedWindow;
 use crate::traits::Univariate;
 use num::{Float, FromPrimitive};
+use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
 /// Running min.
 /// # Arguments
@@ -16,7 +17,7 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_min.get(), 1.0);
 /// ```
 ///
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
 pub struct Min<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub min: F,
 }
