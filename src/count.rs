@@ -1,5 +1,7 @@
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
+
+use crate::traits::{Rollable, RollableUnivariate, Univariate};
 /// Running count.
 /// # Examples
 /// ```
@@ -22,11 +24,26 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Count<F> {
             count: F::from_f64(0.0).unwrap(),
         }
     }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Count<F> {
     #[warn(unused_variables)]
-    pub fn update(&mut self, _x: F) {
+    fn update(&mut self, _x: F) {
         self.count += F::from_f64(1.).unwrap();
     }
-    pub fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.count
     }
 }
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Count<F> {
+    fn revert(&mut self, _x: F) -> std::result::Result<(), &'static str> {
+        if self.count == F::from_f64(0.).unwrap() {
+            return Err("Count cannot go below 0");
+        }
+        self.count -= F::from_f64(1.).unwrap();
+        Ok(())
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollableUnivariate<F> for Count<F> {}

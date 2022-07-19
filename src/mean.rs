@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
-use crate::traits::Univariate;
+use crate::traits::{Rollable, RollableUnivariate, Univariate};
 
 /// Running mean.
 /// # Examples
@@ -40,7 +40,26 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Mean<F>
         self.n.update(x);
         self.mean += (F::from_f64(1.).unwrap() / self.n.get()) * (x - self.mean);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.mean
     }
 }
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Mean<F> {
+    fn revert(&mut self, x: F) -> Result<(), &'static str> {
+        match self.n.revert(x) {
+            Ok(it) => it,
+            Err(err) => return Err(err),
+        };
+
+        let count = self.n.get();
+        if count == F::from_f64(0.).unwrap() {
+            self.mean = F::from_f64(0.0).unwrap();
+        } else {
+            self.mean = (F::from_f64(1.0).unwrap() / count) * (x - self.mean);
+        }
+        Ok(())
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollableUnivariate<F> for Mean<F> {}

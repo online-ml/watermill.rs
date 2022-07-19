@@ -1,4 +1,4 @@
-use crate::traits::Univariate;
+use crate::traits::{Rollable, RollableUnivariate, Univariate};
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 /// Running sum.
@@ -29,7 +29,16 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Sum<F> 
     fn update(&mut self, x: F) {
         self.sum += x;
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.sum
     }
 }
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Sum<F> {
+    fn revert(&mut self, x: F) -> std::result::Result<(), &'static str> {
+        self.sum -= x;
+        Ok(())
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollableUnivariate<F> for Sum<F> {}

@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::mean::Mean;
-use crate::traits::Univariate;
+use crate::traits::{Rollable, RollableUnivariate, Univariate};
 
 /// Running variance using Belford Algorithm.
 /// # Arguments
@@ -58,7 +58,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Varianc
         let mean_new = self.mean.get();
         self.state -= (x - mean_old) * (x - mean_new);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         let mean_n = self.mean.n.get();
         if mean_n > F::from_u32(self.ddof).unwrap() {
             return self.state / (mean_n - F::from_u32(self.ddof).unwrap());
@@ -66,3 +66,15 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Varianc
         F::from_f64(0.).unwrap()
     }
 }
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Variance<F> {
+    fn revert(&mut self, x: F) -> Result<(), &'static str> {
+        let mean_old = self.mean.get();
+        self.mean.revert(x)?;
+        let mean_new = self.mean.get();
+        self.state -= F::from_f64(1.).unwrap() * (x - mean_old) * (x - mean_new);
+        Ok(())
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollableUnivariate<F> for Variance<F> {}
