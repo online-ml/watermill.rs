@@ -55,7 +55,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for EWMean<
             self.mean = self.alpha * x + (F::from_f64(1.).unwrap() - self.alpha) * self.mean;
         }
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.mean
     }
 }

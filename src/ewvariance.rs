@@ -57,7 +57,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for EWVaria
         self.mean.update(x);
         self.sq_mean.update(x.powf(F::from_i8(2).unwrap()))
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.sq_mean.get() - self.mean.get().powf(F::from_i8(2).unwrap())
     }
 }

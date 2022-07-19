@@ -35,7 +35,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for PeakToP
         self.min.update(x);
         self.max.update(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.max.get() - self.min.get()
     }
 }
@@ -74,7 +74,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
         self.min.update(x);
         self.max.update(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.max.get() - self.min.get()
     }
 }

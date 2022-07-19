@@ -33,7 +33,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Max<F> 
             self.max = x;
         }
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.max
     }
 }
@@ -69,7 +69,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for AbsMax<
             self.abs_max = x.abs();
         }
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.abs_max
     }
 }
@@ -104,7 +104,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
     fn update(&mut self, x: F) {
         self.sorted_window.push_back(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.sorted_window.back()
     }
 }

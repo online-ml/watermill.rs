@@ -35,7 +35,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Min<F> 
             self.min = x;
         }
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.min
     }
 }
@@ -68,7 +68,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
     fn update(&mut self, x: F) {
         self.sorted_window.push_back(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.sorted_window.front()
     }
 }

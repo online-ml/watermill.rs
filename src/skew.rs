@@ -68,7 +68,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Skew<F>
         self.central_moments.update_m3();
         self.central_moments.update_m2();
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         let n = self.central_moments.count.get();
 
         let mut skew: F = F::from_f64(0.).unwrap();

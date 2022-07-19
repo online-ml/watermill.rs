@@ -98,8 +98,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
                 || (d <= F::from_f64(-1.).unwrap()
                     && self.position[i - 1] - n < F::from_f64(-1.).unwrap())
             {
-                // d = d.copysign(F::from_f64(1.).unwrap());
-
                 d = F::from_f64(1.).unwrap().copysign(d);
                 let qp1 = self.heights[i + 1];
                 let qm1 = self.heights[i - 1];
@@ -177,13 +175,13 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 *marker += *desired_marker;
             }
             self.adjust();
+            self.heights.sort_by(|x, y| x.partial_cmp(y).unwrap());
         }
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         if self.heights_sorted {
             self.heights[2]
         } else {
-            self.heights.sort_by(|x, y| x.partial_cmp(y).unwrap());
             let length = F::from_usize(self.heights.len()).unwrap();
             let index = (length - F::from_f64(1.).unwrap())
                 .max(F::from_f64(0.).unwrap())
@@ -262,7 +260,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
     fn update(&mut self, x: F) {
         self.sorted_window.push_back(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         let (lower, higher, frac) = self.prepare();
         self.sorted_window[lower] + (self.sorted_window[higher] - self.sorted_window[lower]) * frac
     }

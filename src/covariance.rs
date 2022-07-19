@@ -67,7 +67,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Bivariate<F> for Covarian
                 .unwrap()
                 .max(self.mean_x.n.get() - F::from_u32(self.ddof).unwrap()));
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         self.cov
     }
 }

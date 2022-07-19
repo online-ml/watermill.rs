@@ -55,7 +55,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for IQR<F> 
         self.q_inf.update(x);
         self.q_sup.update(x);
     }
-    fn get(&mut self) -> F {
+    fn get(&self) -> F {
         let v = self.q_inf.get();
         println!("Hello {}", v.to_f64().unwrap());
         self.q_sup.get() - self.q_inf.get()
