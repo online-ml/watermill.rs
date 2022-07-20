@@ -23,6 +23,21 @@ let serialized = serde_json::to_string(&running_median).unwrap();
 let deserialized: Quantile<f64> = serde_json::from_str(&serialized).unwrap();
 
 ```
+You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
+```rust
+
+ use online_statistics::traits::{RollableUnivariate, Univariate};
+use online_statistics::sum::Sum;
+use online_statistics::rolling::Rolling;
+let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
+let mut running_sum: Sum<f64> = Sum::new();
+// We wrap `running_sum` inside the `Rolling` struct.
+let mut rolling_sum: Rolling<f64> = Rolling::new(& mut running_sum, 2).unwrap();
+for x in data.iter(){
+    rolling_sum.update(*x as f64);
+}
+assert_eq!(rolling_sum.get(), 9.0);
+```
 
 ## Installation
 ---------
@@ -31,6 +46,25 @@ Add the following line to your `cargo.toml`:
 [dependencies]
 online-statistics = "0.1.0"
 ```
+
+## Statistics available
+| Statistics                      	| Rollable 	|
+|---------------------------------	|----------	|
+| Mean                            	| ✅        	|
+| Variance                        	| ✅        	|
+| Sum                             	| ✅        	|
+| Min                             	| ✅        	|
+| Max                             	| ✅        	|
+| Count                           	| ❌        	|
+| Quantile                        	| ✅        	|
+| Peak to peak                    	| ✅        	|
+| Exponentially weighted mean     	| ❌        	|
+| Exponentially weighted variance 	| ❌        	|
+| Interquartile range             	| ✅        	|
+| Kurtosis                        	| ❌        	|
+| Skewness                        	| ❌        	|
+| Covariance                      	| ❌        	|
+
 ## Inspiration
 ---------
 The `stats` module of the [`river`](https://github.com/online-ml/river) library in `Python` greatly inspired this crate. 
