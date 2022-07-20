@@ -29,6 +29,23 @@
 //![dependencies]
 //! online-statistics = "0.1.0"
 //!```
+//!## Statistics available
+//!| Statistics                      | Rollable ?|
+//!|---------------------------------|----------|
+//!| Mean                            | ✅        |
+//!| Variance                        | ✅        |
+//!| Sum                             | ✅        |
+//!| Min                             | ✅        |
+//!| Max                             | ✅        |
+//!| Count                           | ❌        |
+//!| Quantile                        | ✅        |
+//!| Peak to peak                    | ✅        |
+//!| Exponentially weighted mean     | ❌        |
+//!| Exponentially weighted variance | ❌        |
+//!| Interquartile range             | ✅        |
+//!| Kurtosis                        | ❌        |
+//!| Skewness                        | ❌        |
+//!| Covariance                      | ❌        |
 //!## Inspiration
 //!The `stats` module of the [`river`](https://github.com/online-ml/river) library in `Python` greatly inspired this crate.
 
