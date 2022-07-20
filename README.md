@@ -48,7 +48,7 @@ online-statistics = "0.1.0"
 ```
 
 ## Statistics available
-| Statistics                      	| Rollable 	|
+| Statistics                      	| Rollable?	|
 |---------------------------------	|----------	|
 | Mean                            	| ✅        	|
 | Variance                        	| ✅        	|
