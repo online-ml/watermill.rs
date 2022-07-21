@@ -23,6 +23,16 @@ let serialized = serde_json::to_string(&running_median).unwrap();
 let deserialized: Quantile<f64> = serde_json::from_str(&serialized).unwrap();
 
 ```
+Now let's compute the online sum using the iterators:
+```rust
+use online_statistics::iter::IterStatExt;
+let data: Vec<f64> = vec![1., 2., 3.];
+let vec_true: Vec<f64> = vec![1., 3., 6.];
+for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
+    assert_eq!(d, t);
+}
+```
+
 You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
