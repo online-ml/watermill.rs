@@ -26,7 +26,7 @@ let deserialized: Quantile<f64> = serde_json::from_str(&serialized).unwrap();
 You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
- use online_statistics::traits::{RollableUnivariate, Univariate};
+use online_statistics::traits::{RollableUnivariate, Univariate};
 use online_statistics::sum::Sum;
 use online_statistics::rolling::Rolling;
 let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
