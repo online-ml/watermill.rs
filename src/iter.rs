@@ -15,6 +15,8 @@ use crate::skew::Skew;
 use crate::sum::Sum;
 use crate::traits::Univariate;
 use crate::variance::Variance;
+
+#[doc(hidden)]
 pub struct IterStat<I>
 where
     I: Iterator,
