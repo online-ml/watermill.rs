@@ -54,6 +54,7 @@ pub mod covariance;
 pub mod ewmean;
 pub mod ewvariance;
 pub mod iqr;
+pub mod iter;
 pub mod kurtosis;
 pub mod maximum;
 pub mod mean;
