@@ -205,4 +205,17 @@ mod tests {
             assert_eq!(d, t);
         }
     }
+    #[test]
+    fn test_online_quantile() {
+        let vec_true: Vec<f64> = vec![9., 7., 7., 3., 3., 6., 6., 6., 5.];
+        let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
+        for (d, t) in data
+            .into_iter()
+            .online_quantile(0.5_f64)
+            .zip(vec_true.into_iter())
+        {
+            println!("{},{}", d, t);
+            assert_eq!(d, t);
+        }
+    }
 }
