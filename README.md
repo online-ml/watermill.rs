@@ -29,7 +29,7 @@ use online_statistics::iter::IterStatExt;
 let data: Vec<f64> = vec![1., 2., 3.];
 let vec_true: Vec<f64> = vec![1., 3., 6.];
 for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
-    assert_eq!(d, t);
+    assert_eq!(d, t); //       ^^^^^^^^^^
 }
 ```
 
