@@ -1,6 +1,6 @@
 # Online statistics in Rust 🦀 
 
-**`online-statistics` is crate 🦀 for Blazingly fast, generic and serializable, online statistics.**
+**`online-statistics` is crate 🦀 for Blazingly fast, generic and serializable online statistics.**
 
 ## Quickstart
 ---------
@@ -33,7 +33,7 @@ for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
 }
 ```
 
-You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
+You can also compute rolling statistics; in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
 use online_statistics::rolling::Rolling;
