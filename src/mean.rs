@@ -63,7 +63,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Revertable<F> for Mean<F>
         if count == F::from_f64(0.).unwrap() {
             self.mean = F::from_f64(0.0).unwrap();
         } else {
-            self.mean = (F::from_f64(1.0).unwrap() / count) * (x - self.mean);
+            self.mean -= (F::from_f64(1.0).unwrap() / count) * (x - self.mean);
         }
         Ok(())
     }
