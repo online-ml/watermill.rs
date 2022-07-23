@@ -10,11 +10,11 @@ pub trait Bivariate<F: Float + FromPrimitive + AddAssign + SubAssign> {
     fn get(&self) -> F;
 }
 
-pub trait Rollable<F: Float + FromPrimitive + AddAssign + SubAssign> {
+pub trait Revertable<F: Float + FromPrimitive + AddAssign + SubAssign> {
     fn revert(&mut self, x: F) -> Result<(), &'static str>;
 }
 
 pub trait RollableUnivariate<F: Float + FromPrimitive + AddAssign + SubAssign>:
-    Rollable<F> + Univariate<F>
+    Revertable<F> + Univariate<F>
 {
 }
