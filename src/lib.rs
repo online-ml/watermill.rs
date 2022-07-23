@@ -1,6 +1,6 @@
 //!# online-statistics
 //!
-//! `online-statistics` is crate for Blazingly fast, generic and serializable, online statistics
+//! `online-statistics` is crate for Blazingly fast, generic and serializable online statistics.
 //!
 //!## Quickstart
 //! Let's compute the online median and then serialize it:
