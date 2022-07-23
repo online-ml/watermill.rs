@@ -1,6 +1,6 @@
 # Online statistics in Rust 🦀 
 
-**`online-statistics` is crate 🦀 for Blazingly fast ⚡️, generic 🏭 and serializable 📝, online 🌊 statistics 📊.**
+**`online-statistics` is crate 🦀 for Blazingly fast, generic and serializable, online statistics.**
 
 ## Quickstart
 ---------
