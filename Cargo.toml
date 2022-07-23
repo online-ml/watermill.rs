@@ -8,6 +8,7 @@ description = "Blazingly fast, generic, and serializable online statistics."
 repository = "https://github.com/AdilZouitine/online-statistics.rs"
 keywords = ["statistics", "stream"]
 exclude = [".github", ".pre-commit-config.yaml"]
+readme = "README.md"
 [dependencies]
 num = "0.4.0"
 ordered-float = "3.0.0"
