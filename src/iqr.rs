@@ -5,7 +5,7 @@ use num::{Float, FromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
 /// Computes the interquartile range.
-/// /// # Arguments
+/// # Arguments
 /// * `q_inf` - Desired inferior quantile, must be between 0 and 1. Defaults to `0.25`.
 /// * `q_sup` -  Desired superior quantile, must be between 0 and 1. Defaults to `0.75`.
 /// # Examples
@@ -56,8 +56,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for IQR<F> 
         self.q_sup.update(x);
     }
     fn get(&self) -> F {
-        let v = self.q_inf.get();
-        println!("Hello {}", v.to_f64().unwrap());
         self.q_sup.get() - self.q_inf.get()
     }
 }
