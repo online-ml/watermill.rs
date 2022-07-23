@@ -65,8 +65,8 @@ pub mod quantile;
 pub mod rolling;
 pub mod skew;
 mod sorted_window;
+pub mod stats;
 pub mod sum;
-pub mod traits;
 pub mod variance;
 #[cfg(test)]
 mod tests {

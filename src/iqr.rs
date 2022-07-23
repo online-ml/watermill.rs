@@ -1,6 +1,6 @@
 use crate::quantile::Quantile;
 
-use crate::traits::Univariate;
+use crate::stats::Univariate;
 use num::{Float, FromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};

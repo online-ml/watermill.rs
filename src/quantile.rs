@@ -2,7 +2,7 @@ use crate::sorted_window::SortedWindow;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
-use crate::traits::Univariate;
+use crate::stats::Univariate;
 use serde::{Deserialize, Serialize};
 /// Running quantile estimator using P-square Algorithm.
 /// # Arguments

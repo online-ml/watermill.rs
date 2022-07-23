@@ -1,4 +1,4 @@
-use crate::traits::{RollableUnivariate, Univariate};
+use crate::stats::{RollableUnivariate, Univariate};
 use num::{Float, FromPrimitive};
 use std::{
     collections::VecDeque,
@@ -77,8 +77,8 @@ mod tests {
     #[test]
     fn it_works() {
         use crate::rolling::Rolling;
+        use crate::stats::Univariate;
         use crate::sum::Sum;
-        use crate::traits::Univariate;
         let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
         let mut running_sum: Sum<f64> = Sum::new();
         let mut rolling_sum: Rolling<f64> = Rolling::new(&mut running_sum, 2).unwrap();

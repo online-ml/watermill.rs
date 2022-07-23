@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
-use crate::traits::{Rollable, RollableUnivariate, Univariate};
+use crate::stats::{Rollable, RollableUnivariate, Univariate};
 use serde::{Deserialize, Serialize};
 
 /// Running mean.

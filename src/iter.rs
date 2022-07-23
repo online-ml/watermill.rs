@@ -12,8 +12,8 @@ use crate::minimum::Min;
 use crate::ptp::PeakToPeak;
 use crate::quantile::Quantile;
 use crate::skew::Skew;
+use crate::stats::Univariate;
 use crate::sum::Sum;
-use crate::traits::Univariate;
 use crate::variance::Variance;
 
 #[doc(hidden)]

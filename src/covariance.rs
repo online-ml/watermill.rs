@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::mean::Mean;
-use crate::traits::{Bivariate, Univariate};
+use crate::stats::{Bivariate, Univariate};
 use serde::{Deserialize, Serialize};
 /// Running Covariance.
 /// # Examples

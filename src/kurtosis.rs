@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::moments::CentralMoments;
-use crate::traits::Univariate;
+use crate::stats::Univariate;
 use serde::{Deserialize, Serialize};
 /// Running Kurtosis.
 /// # Arguments

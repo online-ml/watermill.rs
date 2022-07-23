@@ -1,4 +1,4 @@
-use crate::traits::{Rollable, RollableUnivariate, Univariate};
+use crate::stats::{Rollable, RollableUnivariate, Univariate};
 use num::{Float, FromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
