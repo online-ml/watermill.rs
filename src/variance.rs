@@ -16,7 +16,7 @@ use serde::{Deserialize, Serialize};
 /// for x in data.iter(){
 ///     running_variance.update(*x as f64);
 /// }
-/// assert_eq!(running_variance.get(), -12.566666666666668);
+/// assert_eq!(running_variance.get(), 12.566666666666668);
 /// ```
 /// # References
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
@@ -56,7 +56,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Varianc
         let mean_old = self.mean.get();
         self.mean.update(x);
         let mean_new = self.mean.get();
-        self.state -= (x - mean_old) * (x - mean_new);
+        self.state += (x - mean_old) * (x - mean_new);
     }
     fn get(&self) -> F {
         let mean_n = self.mean.n.get();
