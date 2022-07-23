@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 /// # Examples
 /// ```
 /// use online_statistics::ewmean::EWMean;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut running_ewmean: EWMean<f64> = EWMean::default();
 /// let data = vec![1., 3., 5., 4., 6., 8., 7., 9., 11.];
 /// for i in data.iter(){

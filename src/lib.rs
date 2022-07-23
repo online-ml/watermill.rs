@@ -6,7 +6,7 @@
 //! Let's compute the online median and then serialize it:
 //!```
 //!use online_statistics::quantile::Quantile;
-//!use online_statistics::traits::Univariate;
+//!use online_statistics::stats::Univariate;
 //!let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 //!let mut running_median: Quantile<f64> = Quantile::new(0.5_f64).unwrap();
 //!for x in data.iter() {
@@ -30,7 +30,7 @@
 //! online-statistics = "0.1.0"
 //!```
 //!## Statistics available
-//!| Statistics                      | Rollable ?|
+//!| Statistics                      | Revertable ?|
 //!|---------------------------------|----------|
 //!| Mean                            | ✅        |
 //!| Variance                        | ✅        |

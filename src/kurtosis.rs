@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 /// # Examples
 /// ```
 /// use online_statistics::kurtosis::Kurtosis;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let data: Vec<f64> = vec![ 0.49671415, -0.1382643 ,  0.64768854,  1.52302986, -0.23415337,-0.23413696];
 /// let mut running_kurtosis: Kurtosis<f64> = Kurtosis::default();
 /// for x in data.iter(){
@@ -22,7 +22,7 @@ use serde::{Deserialize, Serialize};
 /// With bias enabled.
 /// ```
 /// use online_statistics::kurtosis::Kurtosis;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let data: Vec<f64> = vec![ 0.49671415, -0.1382643 ,  0.64768854,  1.52302986, -0.23415337,-0.23413696];
 /// let mut running_kurtosis: Kurtosis<f64> = Kurtosis::new(true);
 /// for x in data.iter(){

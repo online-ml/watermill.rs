@@ -11,7 +11,7 @@ use std::ops::{AddAssign, SubAssign};
 /// # Examples
 /// ```
 /// use online_statistics::iqr::IQR;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut running_iqr: IQR<f64> = IQR::default();
 /// for i in 1..=100{
 ///     running_iqr.update(i as f64);

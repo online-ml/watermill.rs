@@ -10,7 +10,7 @@ use std::ops::{AddAssign, SubAssign};
 /// # Examples
 /// ```
 /// use online_statistics::ewvariance::EWVariance;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut running_ewvariance: EWVariance<f64> = EWVariance::default();
 /// let data = vec![1., 3., 5., 4., 6., 8., 7., 9., 11.];
 /// for i in data.iter(){

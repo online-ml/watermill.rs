@@ -6,17 +6,17 @@ use std::{
 };
 
 /// Generic wrapper for performing rolling computations.
-/// This can be wrapped around any struct which implements a `Univariate` and a `Rollable` and `RollableUnivariate`
+/// This can be wrapped around any struct which implements a `Univariate` and a `Revertable` and `RollableUnivariate`
 /// traits.
 /// Inputs to `update` are stored in a `VecDeque`. Elements of the queue are popped when the window is
 //  full.
 /// # Arguments
-/// * `to_roll` - A running statistics which implements `Univariate` and `Rollable` and `RollableUnivariate` trait.
+/// * `to_roll` - A running statistics which implements `Univariate` and `Revertable` and `RollableUnivariate` trait.
 /// * `window_size` - Size of sliding window.
 /// # Examples
 /// ```
 ///
-/// use online_statistics::traits::{RollableUnivariate, Univariate};
+/// use online_statistics::stats::{RollableUnivariate, Univariate};
 /// use online_statistics::sum::Sum;
 /// use online_statistics::rolling::Rolling;
 /// let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];

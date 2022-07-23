@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 /// # Examples
 /// ```
 /// use online_statistics::quantile::Quantile;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
 /// let mut running_quantile: Quantile<f64> = Quantile::default();
 /// for x in data.iter(){
@@ -200,7 +200,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
 /// # Examples
 /// ```
 /// use online_statistics::quantile::RollingQuantile;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut rolling_quantile: RollingQuantile<f64> = RollingQuantile::new(0.5_f64, 101).unwrap();
 /// for i in 0..=100{
 ///     rolling_quantile.update(i as f64);

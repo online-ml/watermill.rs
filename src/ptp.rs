@@ -8,7 +8,7 @@ use std::ops::{AddAssign, SubAssign};
 /// # Examples
 /// ```
 /// use online_statistics::ptp::PeakToPeak;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut running_peak_to_peak: PeakToPeak<f64> = PeakToPeak::new();
 /// for i in 1..10{
 ///     running_peak_to_peak.update(i as f64);
@@ -47,7 +47,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for PeakToP
 /// # Examples
 /// ```
 /// use online_statistics::ptp::RollingPeakToPeak;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::Univariate;
 /// let mut rolling_peak_to_peak: RollingPeakToPeak<f64> = RollingPeakToPeak::new(3);
 /// for i in 1..10{
 ///     rolling_peak_to_peak.update(i as f64);
