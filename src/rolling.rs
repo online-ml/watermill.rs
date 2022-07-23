@@ -78,13 +78,14 @@ mod tests {
     fn it_works() {
         use crate::rolling::Rolling;
         use crate::stats::Univariate;
-        use crate::sum::Sum;
+        use crate::variance::Variance;
         let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
-        let mut running_sum: Sum<f64> = Sum::new();
-        let mut rolling_sum: Rolling<f64> = Rolling::new(&mut running_sum, 2).unwrap();
+        let mut running_var: Variance<f64> = Variance::default();
+        // We wrap `running_var` inside the `Rolling` struct.
+        let mut rolling_var: Rolling<f64> = Rolling::new(&mut running_var, 2).unwrap();
         for x in data.iter() {
-            rolling_sum.update(*x as f64);
+            rolling_var.update(*x as f64);
         }
-        assert_eq!(rolling_sum.get(), 9.0);
+        assert_eq!(rolling_var.get(), 0.5);
     }
 }
