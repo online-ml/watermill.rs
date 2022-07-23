@@ -2,7 +2,7 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::mean::Mean;
-use crate::stats::{Rollable, RollableUnivariate, Univariate};
+use crate::stats::{Revertable, RollableUnivariate, Univariate};
 use serde::{Deserialize, Serialize};
 /// Running variance using Belford Algorithm.
 /// # Arguments
@@ -10,13 +10,20 @@ use serde::{Deserialize, Serialize};
 /// # Examples
 /// ```
 /// use online_statistics::variance::Variance;
-/// use online_statistics::traits::Univariate;
-/// let data = vec![3, 5, 4, 7, 10, 12];
+/// use online_statistics::stats::{Univariate, Revertable};
+/// let data: Vec<f64> = vec![3., 5., 4., 7., 10., 12.];
+/// let data_revert = data.clone();
 /// let mut running_variance: Variance<f64> = Variance::default();
-/// for x in data.iter(){
-///     running_variance.update(*x as f64);
+/// for x in data.into_iter(){
+///     running_variance.update(x);
 /// }
 /// assert_eq!(running_variance.get(), 12.566666666666668);
+/// // You can revert the variance
+///
+/// for x in data_revert.into_iter().rev(){
+///     running_variance.revert(x);
+/// }
+/// assert_eq!(running_variance.get(), 0.);
 /// ```
 /// # References
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
@@ -67,12 +74,12 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Varianc
     }
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Variance<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Revertable<F> for Variance<F> {
     fn revert(&mut self, x: F) -> Result<(), &'static str> {
         let mean_old = self.mean.get();
         self.mean.revert(x)?;
         let mean_new = self.mean.get();
-        self.state -= F::from_f64(1.).unwrap() * (x - mean_old) * (x - mean_new);
+        self.state -= (x - mean_old) * (x - mean_new);
         Ok(())
     }
 }

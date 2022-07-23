@@ -2,19 +2,25 @@ use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::count::Count;
-use crate::stats::{Rollable, RollableUnivariate, Univariate};
+use crate::stats::{Revertable, RollableUnivariate, Univariate};
 use serde::{Deserialize, Serialize};
 
 /// Running mean.
 /// # Examples
 /// ```
 /// use online_statistics::mean::Mean;
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::{Univariate, Revertable};
 /// let mut running_mean: Mean<f64> = Mean::new();
 /// for i in 0..10{
 ///     running_mean.update(i as f64);
 /// }
 /// assert_eq!(running_mean.get(), 4.5);
+///
+/// // You can revert the mean
+/// for i in (0..10).rev(){
+///     running_mean.revert(i as f64);
+/// }
+/// assert_eq!(running_mean.get(), 0.);
 /// ```
 /// # References
 /// [^1]: [West, D. H. D. (1979). Updating mean and variance estimates: An improved method. Communications of the ACM, 22(9), 532-535.](https://dl.acm.org/doi/10.1145/359146.359153)
@@ -46,7 +52,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Mean<F>
     }
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Mean<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Revertable<F> for Mean<F> {
     fn revert(&mut self, x: F) -> Result<(), &'static str> {
         match self.n.revert(x) {
             Ok(it) => it,

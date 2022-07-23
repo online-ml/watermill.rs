@@ -1,20 +1,26 @@
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
-use crate::stats::{Rollable, RollableUnivariate, Univariate};
+use crate::stats::{Revertable, RollableUnivariate, Univariate};
 use serde::{Deserialize, Serialize};
 /// Running count.
 /// # Examples
 /// ```
-/// use online_statistics::traits::Univariate;
+/// use online_statistics::stats::{Univariate, Revertable};
 /// use online_statistics::count::Count;
 /// let mut running_count: Count<f64> = Count::new();
 /// for i in 1..10{
 ///     running_count.update(i as f64);
 /// }
 /// assert_eq!(running_count.get(), 9.0);
-/// ```
 ///
+/// // You can revert the count
+///
+/// for i in (1..10).rev(){
+///     running_count.revert(i as f64);
+/// }
+/// assert_eq!(running_count.get(), 0.);
+///```
 #[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
 pub struct Count<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub count: F,
@@ -38,7 +44,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Count<F
     }
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Rollable<F> for Count<F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Revertable<F> for Count<F> {
     fn revert(&mut self, _x: F) -> std::result::Result<(), &'static str> {
         if self.count == F::from_f64(0.).unwrap() {
             return Err("Count cannot go below 0");
