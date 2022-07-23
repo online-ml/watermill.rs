@@ -36,17 +36,17 @@ for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
 You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
-use online_statistics::stats::{RollableUnivariate, Univariate};
-use online_statistics::sum::Sum;
 use online_statistics::rolling::Rolling;
-let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
-let mut running_sum: Sum<f64> = Sum::new();
-// We wrap `running_sum` inside the `Rolling` struct.
-let mut rolling_sum: Rolling<f64> = Rolling::new(& mut running_sum, 2).unwrap();
-for x in data.iter(){
-    rolling_sum.update(*x as f64);
+use online_statistics::stats::Univariate;
+use online_statistics::variance::Variance;
+let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
+let mut running_var: Variance<f64> = Variance::default();
+// We wrap `running_var` inside the `Rolling` struct.
+let mut rolling_var: Rolling<f64> = Rolling::new(&mut running_var, 2).unwrap();
+for x in data.iter() {
+    rolling_var.update(*x as f64);
 }
-assert_eq!(rolling_sum.get(), 9.0);
+assert_eq!(rolling_var.get(), 0.5);
 ```
 
 ## Installation
