@@ -8,10 +8,10 @@ Let's compute the online median and then serialize it:
 ```rust
 use online_statistics::quantile::Quantile;
 use online_statistics::stats::Univariate;
-let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
+let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 let mut running_median: Quantile<f64> = Quantile::new(0.5_f64).unwrap();
-for x in data.iter() {
-    running_median.update(*x as f64); // update the current statistics
+for x in data.into_iter() {
+    running_median.update(x); // update the current statistics
     println!("The actual median value is: {}", running_median.get());
 }
 assert_eq!(running_median.get(), 5.0);
@@ -39,12 +39,12 @@ You can also compute rolling statistics; in the following example let's compute 
 use online_statistics::rolling::Rolling;
 use online_statistics::stats::Univariate;
 use online_statistics::variance::Variance;
-let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
+let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 let mut running_var: Variance<f64> = Variance::default();
 // We wrap `running_var` inside the `Rolling` struct.
 let mut rolling_var: Rolling<f64> = Rolling::new(&mut running_var, 2).unwrap();
-for x in data.iter() {
-    rolling_var.update(*x as f64);
+for x in data.into_iter() {
+    rolling_var.update(x);
 }
 assert_eq!(rolling_var.get(), 0.5);
 ```
