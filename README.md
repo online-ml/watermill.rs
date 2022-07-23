@@ -25,7 +25,7 @@ let deserialized: Quantile<f64> = serde_json::from_str(&serialized).unwrap();
 ```
 Now let's compute the online sum using the iterators:
 ```rust
-use online_statistics::iter::IterStatExt;
+use online_statistics::iter::IterStatisticsExtend;
 let data: Vec<f64> = vec![1., 2., 3.];
 let vec_true: Vec<f64> = vec![1., 3., 6.];
 for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
