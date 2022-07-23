@@ -7,7 +7,7 @@
 Let's compute the online median and then serialize it:
 ```rust
 use online_statistics::quantile::Quantile;
-use online_statistics::traits::Univariate;
+use online_statistics::stats::Univariate;
 let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 let mut running_median: Quantile<f64> = Quantile::new(0.5_f64).unwrap();
 for x in data.iter() {
@@ -36,7 +36,7 @@ for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
 You can also compute rolling statistics, in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
-use online_statistics::traits::{RollableUnivariate, Univariate};
+use online_statistics::stats::{RollableUnivariate, Univariate};
 use online_statistics::sum::Sum;
 use online_statistics::rolling::Rolling;
 let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
@@ -58,7 +58,7 @@ online-statistics = "0.1.0"
 ```
 
 ## Statistics available
-| Statistics                      	| Rollable ?|
+| Statistics                      	| Revertable ?|
 |---------------------------------	|----------	|
 | Mean                            	| ✅        	|
 | Variance                        	| ✅        	|
