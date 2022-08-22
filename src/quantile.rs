@@ -204,6 +204,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
 /// let mut rolling_quantile: RollingQuantile<f64> = RollingQuantile::new(0.5_f64, 101).unwrap();
 /// for i in 0..=100{
 ///     rolling_quantile.update(i as f64);
+///     //println!("{}", rolling_quantile.get());
+///     rolling_quantile.get();
 /// }
 /// assert_eq!(rolling_quantile.get(), 50.0);
 /// ```
@@ -243,7 +245,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingQuantile<F> {
     fn prepare(&self) -> (usize, usize, F) {
         if self.sorted_window.len() < self.window_size {
             let idx = self.q
-                * (F::from_usize(self.sorted_window.len()).unwrap() - F::from_f64(-1.).unwrap());
+                * (F::from_usize(self.sorted_window.len()).unwrap() - F::from_f64(1.).unwrap());
             let lower = idx.floor().to_usize().unwrap();
             let mut higher = lower + 1;
             if higher > self.sorted_window.len() - 1 {

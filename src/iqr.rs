@@ -73,6 +73,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for IQR<F> 
 /// let mut rolling_iqr: RollingIQR<f64> = RollingIQR::new(0.25_f64, 0.75_f64, 101).unwrap();
 /// for i in 0..=100{
 ///     rolling_iqr.update(i as f64);
+///     //println!("{}", rolling_iqr.get());
+///     rolling_iqr.get();
 /// }
 /// assert_eq!(rolling_iqr.get(), 50.0);
 /// ```
@@ -137,7 +139,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingIQR<F> {
     fn prepare(&self, q: F, is_inf: bool) -> (usize, usize, F) {
         if self.sorted_window.len() < self.window_size {
             let idx =
-                q * (F::from_usize(self.sorted_window.len()).unwrap() - F::from_f64(-1.).unwrap());
+                q * (F::from_usize(self.sorted_window.len()).unwrap() - F::from_f64(1.).unwrap());
             let lower = idx.floor().to_usize().unwrap();
             let mut higher = lower + 1;
             if higher > self.sorted_window.len() - 1 {
