@@ -110,7 +110,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingIQR<F> {
         let lower_inf = idx_inf.floor().to_usize().unwrap();
         let mut higher_inf = lower_inf + 1;
         if higher_inf > window_size - 1 {
-            higher_inf = lower_inf - 1;
+            higher_inf = lower_inf.saturating_sub(1); // Avoid attempt to subtract with overflow
         }
 
         let frac_inf = idx_inf - F::from_usize(lower_inf).unwrap();
@@ -119,7 +119,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingIQR<F> {
         let lower_sup = idx_sup.floor().to_usize().unwrap();
         let mut higher_sup = lower_sup + 1;
         if higher_sup > window_size - 1 {
-            higher_sup = lower_sup - 1;
+            higher_sup = lower_sup.saturating_sub(1); // Avoid attempt to subtract with overflow
         }
 
         let frac_sup = idx_sup - F::from_usize(lower_sup).unwrap();
@@ -143,7 +143,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingIQR<F> {
             let lower = idx.floor().to_usize().unwrap();
             let mut higher = lower + 1;
             if higher > self.sorted_window.len() - 1 {
-                higher = self.sorted_window.len() - 1;
+                higher = self.sorted_window.len().saturating_sub(1); // Avoid attempt to subtract with overflow
             }
 
             let frac = idx - F::from_usize(lower).unwrap();
@@ -170,5 +170,20 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
             + (self.sorted_window[higher_sup] - self.sorted_window[lower_sup]) * frac_sup;
 
         quantile_sup - quantile_inf
+    }
+}
+#[cfg(test)]
+mod test {
+    #[test]
+    fn rolling_iqr_edge_case() {
+        use crate::iqr::RollingIQR;
+        use crate::stats::Univariate;
+        let mut rolling_iqr: RollingIQR<f64> = RollingIQR::new(0.99_f64, 1.0_f64, 1).unwrap();
+        for i in 0..=1000 {
+            rolling_iqr.update(i as f64);
+            //println!("{}", rolling_iqr.get());
+            rolling_iqr.get();
+        }
+        assert_eq!(rolling_iqr.get(), 0.0);
     }
 }

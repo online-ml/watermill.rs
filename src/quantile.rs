@@ -229,7 +229,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingQuantile<F> {
         let lower = idx.floor().to_usize().unwrap();
         let mut higher = lower + 1;
         if higher > window_size - 1 {
-            higher = lower - 1;
+            higher = lower.saturating_sub(1); // Avoid attempt to subtract with overflow
         }
 
         let frac = idx - F::from_usize(lower).unwrap();
@@ -249,7 +249,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> RollingQuantile<F> {
             let lower = idx.floor().to_usize().unwrap();
             let mut higher = lower + 1;
             if higher > self.sorted_window.len() - 1 {
-                higher = self.sorted_window.len() - 1;
+                higher = self.sorted_window.len().saturating_sub(1); // Avoid attempt to subtract with overflow
             }
 
             let frac = idx - F::from_usize(lower).unwrap();
@@ -266,5 +266,20 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
     fn get(&self) -> F {
         let (lower, higher, frac) = self.prepare();
         self.sorted_window[lower] + (self.sorted_window[higher] - self.sorted_window[lower]) * frac
+    }
+}
+#[cfg(test)]
+mod test {
+    #[test]
+    fn rolling_quantile_edge_case() {
+        use crate::quantile::RollingQuantile;
+        use crate::stats::Univariate;
+        let mut rolling_quantile: RollingQuantile<f64> = RollingQuantile::new(1.0_f64, 1).unwrap();
+        for i in 0..=1000 {
+            rolling_quantile.update(i as f64);
+            //println!("{}", rolling_quantile.get());
+            rolling_quantile.get();
+        }
+        assert_eq!(rolling_quantile.get(), 1000.0);
     }
 }
