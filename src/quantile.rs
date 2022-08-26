@@ -211,6 +211,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
 /// ```
 ///
 
+#[derive(Serialize, Deserialize)]
 pub struct RollingQuantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     sorted_window: SortedWindow<F>,
     q: F,
