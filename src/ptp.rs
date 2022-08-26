@@ -55,7 +55,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for PeakToP
 /// assert_eq!(rolling_peak_to_peak.get(), 2.0);
 /// ```
 ///
-
+#[derive(Serialize, Deserialize)]
 pub struct RollingPeakToPeak<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub min: RollingMin<F>,
     pub max: RollingMax<F>,
