@@ -53,6 +53,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Min<F> 
 /// assert_eq!(rolling_min.get(), 7.0);
 /// ```
 ///
+#[derive(Serialize, Deserialize)]
 pub struct RollingMin<F: Float + FromPrimitive + AddAssign + SubAssign> {
     sorted_window: SortedWindow<F>,
 }
