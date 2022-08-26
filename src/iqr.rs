@@ -80,6 +80,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for IQR<F> 
 /// ```
 ///
 
+#[derive(Serialize, Deserialize)]
 pub struct RollingIQR<F: Float + FromPrimitive + AddAssign + SubAssign> {
     sorted_window: SortedWindow<F>,
     q_inf: F,
