@@ -1,5 +1,9 @@
 # Release
 
+## 0.2.3 - 2022-08-27
+
+- `sorted_window::SortedWindow` is Serializable, Deserializable, therefore `iqr::RollingIQR`, `quantile::RollingQuantile`, `maximum::RollingMax`, `minimum::RollingMin`, `ptp::RollingPeakToPeak` is Serializable, Deserializable too
+
 ## 0.2.2 - 2022-08-23
 
 - Fix `attempt to subtract with overflow` for `iqr::RollingIQR` and `quantile::RollingQuantile`
