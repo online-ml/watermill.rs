@@ -88,6 +88,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for AbsMax<
 /// assert_eq!(rolling_max.get(), 9.0);
 /// ```
 ///
+#[derive(Serialize, Deserialize)]
 pub struct RollingMax<F: Float + FromPrimitive + AddAssign + SubAssign> {
     sorted_window: SortedWindow<F>,
 }
