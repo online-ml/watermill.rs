@@ -6,8 +6,9 @@ use std::{
     ops::{AddAssign, Index, SubAssign},
 };
 
+#[doc(hidden)]
 #[derive(Serialize, Deserialize)]
-pub(crate) struct SortedWindow<F: Float + FromPrimitive + AddAssign + SubAssign> {
+pub struct SortedWindow<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub(crate) sorted_window: VecDeque<NotNan<F>>,
     pub(crate) unsorted_window: VecDeque<F>,
     window_size: usize,
@@ -23,6 +24,9 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> SortedWindow<F> {
     }
     pub fn len(&self) -> usize {
         self.sorted_window.len()
+    }
+    pub fn is_empty(&self) -> bool {
+        self.sorted_window.len() == 0
     }
 
     pub fn front(&self) -> F {
