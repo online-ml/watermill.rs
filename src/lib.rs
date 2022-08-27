@@ -64,15 +64,7 @@ pub mod ptp;
 pub mod quantile;
 pub mod rolling;
 pub mod skew;
-mod sorted_window;
+pub mod sorted_window;
 pub mod stats;
 pub mod sum;
 pub mod variance;
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
-    }
-}
