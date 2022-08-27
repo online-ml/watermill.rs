@@ -1,5 +1,9 @@
 # Release
 
+## 0.2.4 - 2022-08-27
+
+- `sorted_window::SortedWindow` is public now.
+
 ## 0.2.3 - 2022-08-27
 
 - `sorted_window::SortedWindow` is Serializable, Deserializable, therefore `iqr::RollingIQR`, `quantile::RollingQuantile`, `maximum::RollingMax`, `minimum::RollingMin`, `ptp::RollingPeakToPeak` is Serializable, Deserializable too
