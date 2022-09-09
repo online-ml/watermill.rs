@@ -1,5 +1,9 @@
 # Release
 
+## 0.2.5 - 2022-09-09
+
+- Fix panic error ` 'called `Option::unwrap()` on a `None` value'` on `quantile::Quantile`
+
 ## 0.2.4 - 2022-08-27
 
 - `sorted_window::SortedWindow` is public now.
