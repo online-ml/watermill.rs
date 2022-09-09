@@ -1,5 +1,5 @@
 use crate::sorted_window::SortedWindow;
-use num::{Float, FromPrimitive};
+use num::{Float, FromPrimitive, ToPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
 use crate::stats::Univariate;
@@ -109,8 +109,12 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Quantile<F> {
                 if qm1 < qn && qn < qp1 {
                     self.heights[i] = qn;
                 } else {
-                    self.heights[i] = q + d * (self.heights[i + d.to_usize().unwrap()] - q)
-                        / (self.position[i + d.to_usize().unwrap()] - n);
+                    // d can be equals to -1 so we complete the operation in isize domain and go back to usize
+                    let linear_index = (i.to_isize().unwrap() + d.to_isize().unwrap())
+                        .to_usize()
+                        .unwrap();
+                    self.heights[i] = q + d * (self.heights[linear_index] - q)
+                        / (self.position[linear_index] - n);
                 }
                 self.position[i] = n + d;
             }
@@ -282,5 +286,25 @@ mod test {
             rolling_quantile.get();
         }
         assert_eq!(rolling_quantile.get(), 1000.0);
+    }
+
+    #[test]
+    fn quantile_d_negative() {
+        use crate::quantile::Quantile;
+        use crate::stats::Univariate;
+        let data: Vec<f64> = vec![
+            10.557707193831535,
+            8.100043020890668,
+            9.100117273476478,
+            8.892842952595291,
+            10.94588485665605,
+            10.706797949691644,
+            11.568718270819382,
+            8.347755330517664,
+        ];
+        let mut quantile = Quantile::new(0.25_f64).unwrap();
+        for d in data.into_iter() {
+            quantile.update(d);
+        }
     }
 }
