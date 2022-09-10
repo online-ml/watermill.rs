@@ -54,7 +54,7 @@ assert_eq!(rolling_var.get(), 0.5);
 Add the following line to your `cargo.toml`:
 ```
 [dependencies]
-online-statistics = "0.2.5"
+online-statistics = "0.2.6"
 ```
 
 ## Statistics available

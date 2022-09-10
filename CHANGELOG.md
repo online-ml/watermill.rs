@@ -1,5 +1,9 @@
 # Release
 
+## 0.2.6 - 2022-09-09
+
+- Change github owner from `AdilZouitine` to `online-ml`
+
 ## 0.2.5 - 2022-09-09
 
 - Fix panic error ` 'called `Option::unwrap()` on a `None` value'` on `quantile::Quantile`

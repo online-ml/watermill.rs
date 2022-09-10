@@ -1,11 +1,11 @@
 [package]
 name = "online-statistics"
-version = "0.2.5"
+version = "0.2.6"
 edition = "2021"
 authors = ["Adil Zouitine <adilzouitinegm@gmail.com>"]
 license = "MIT"
 description = "Blazingly fast, generic, and serializable online statistics."
-repository = "https://github.com/AdilZouitine/online-statistics.rs"
+repository = "https://github.com/online-ml/online-statistics.rs"
 keywords = ["statistics", "stream"]
 exclude = [".github", ".pre-commit-config.yaml"]
 readme = "README.md"
