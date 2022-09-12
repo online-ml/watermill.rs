@@ -1,13 +1,13 @@
 # Online statistics in Rust 🦀 
 
-**`online-statistics` is crate 🦀 for Blazingly fast, generic and serializable online statistics.**
+**`watermill` is crate 🦀 for Blazingly fast, generic and serializable online statistics.**
 
 ## Quickstart
 ---------
 Let's compute the online median and then serialize it:
 ```rust
-use online_statistics::quantile::Quantile;
-use online_statistics::stats::Univariate;
+use watermill::quantile::Quantile;
+use watermill::stats::Univariate;
 let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 let mut running_median: Quantile<f64> = Quantile::new(0.5_f64).unwrap();
 for x in data.into_iter() {
@@ -25,7 +25,7 @@ let deserialized: Quantile<f64> = serde_json::from_str(&serialized).unwrap();
 ```
 Now let's compute the online sum using the iterators:
 ```rust
-use online_statistics::iter::IterStatisticsExtend;
+use watermill::iter::IterStatisticsExtend;
 let data: Vec<f64> = vec![1., 2., 3.];
 let vec_true: Vec<f64> = vec![1., 3., 6.];
 for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
@@ -36,9 +36,9 @@ for (d, t) in data.into_iter().online_sum().zip(vec_true.into_iter()) {
 You can also compute rolling statistics; in the following example let's compute the rolling sum on 2 previous data: 
 ```rust
 
-use online_statistics::rolling::Rolling;
-use online_statistics::stats::Univariate;
-use online_statistics::variance::Variance;
+use watermill::rolling::Rolling;
+use watermill::stats::Univariate;
+use watermill::variance::Variance;
 let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 let mut running_var: Variance<f64> = Variance::default();
 // We wrap `running_var` inside the `Rolling` struct.
@@ -54,7 +54,7 @@ assert_eq!(rolling_var.get(), 0.5);
 Add the following line to your `cargo.toml`:
 ```
 [dependencies]
-online-statistics = "0.2.6"
+watermill = "0.1.0"
 ```
 
 ## Statistics available

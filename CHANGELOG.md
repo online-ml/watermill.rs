@@ -1,5 +1,13 @@
 # Release
 
+## 0.1.0 - 2022-09-12
+
+- `online-statistics` is `watermill` now
+
+
+---------
+# Archived
+
 ## 0.2.6 - 2022-09-09
 
 - Change github owner from `AdilZouitine` to `online-ml`
@@ -30,4 +38,4 @@
 
 ## 0.1.0 - 2022-07-23
 
-- `online-statistics` is born 🎉 
+- `watermill` is born 🎉 

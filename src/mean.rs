@@ -8,8 +8,8 @@ use serde::{Deserialize, Serialize};
 /// Running mean.
 /// # Examples
 /// ```
-/// use online_statistics::mean::Mean;
-/// use online_statistics::stats::{Univariate, Revertable};
+/// use watermill::mean::Mean;
+/// use watermill::stats::{Univariate, Revertable};
 /// let mut running_mean: Mean<f64> = Mean::new();
 /// for i in 0..10{
 ///     running_mean.update(i as f64);

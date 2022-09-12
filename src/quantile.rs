@@ -9,8 +9,8 @@ use serde::{Deserialize, Serialize};
 /// * `q` - quantile value. **WARNING** Should between `0` and `1`. Defaults to `0.5`.
 /// # Examples
 /// ```
-/// use online_statistics::quantile::Quantile;
-/// use online_statistics::stats::Univariate;
+/// use watermill::quantile::Quantile;
+/// use watermill::stats::Univariate;
 /// let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
 /// let mut running_quantile: Quantile<f64> = Quantile::default();
 /// for x in data.iter(){
@@ -203,8 +203,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
 /// * `window_size` - Size of the rolling window.
 /// # Examples
 /// ```
-/// use online_statistics::quantile::RollingQuantile;
-/// use online_statistics::stats::Univariate;
+/// use watermill::quantile::RollingQuantile;
+/// use watermill::stats::Univariate;
 /// let mut rolling_quantile: RollingQuantile<f64> = RollingQuantile::new(0.5_f64, 101).unwrap();
 /// for i in 0..=100{
 ///     rolling_quantile.update(i as f64);

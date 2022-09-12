@@ -9,8 +9,8 @@ use serde::{Deserialize, Serialize};
 /// * `ddof` - Delta Degrees of Freedom. The divisor used in calculations is `n - ddof`, where `n` represents the number of seen elements.
 /// # Examples
 /// ```
-/// use online_statistics::variance::Variance;
-/// use online_statistics::stats::{Univariate, Revertable};
+/// use watermill::variance::Variance;
+/// use watermill::stats::{Univariate, Revertable};
 /// let data: Vec<f64> = vec![3., 5., 4., 7., 10., 12.];
 /// let data_revert = data.clone();
 /// let mut running_variance: Variance<f64> = Variance::default();

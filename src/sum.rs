@@ -5,8 +5,8 @@ use std::ops::{AddAssign, SubAssign};
 /// Running sum.
 /// # Examples
 /// ```
-/// use online_statistics::stats::{Univariate, Revertable};
-/// use online_statistics::sum::Sum;
+/// use watermill::stats::{Univariate, Revertable};
+/// use watermill::sum::Sum;
 /// let mut running_sum: Sum<f64> = Sum::new();
 /// for i in 1..10{
 ///     running_sum.update(i as f64);

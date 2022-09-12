@@ -7,8 +7,8 @@ use std::ops::{AddAssign, SubAssign};
 /// Running peak to peak (max - min).
 /// # Examples
 /// ```
-/// use online_statistics::ptp::PeakToPeak;
-/// use online_statistics::stats::Univariate;
+/// use watermill::ptp::PeakToPeak;
+/// use watermill::stats::Univariate;
 /// let mut running_peak_to_peak: PeakToPeak<f64> = PeakToPeak::new();
 /// for i in 1..10{
 ///     running_peak_to_peak.update(i as f64);
@@ -46,8 +46,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for PeakToP
 /// * `window_size` - Size of the rolling window.
 /// # Examples
 /// ```
-/// use online_statistics::ptp::RollingPeakToPeak;
-/// use online_statistics::stats::Univariate;
+/// use watermill::ptp::RollingPeakToPeak;
+/// use watermill::stats::Univariate;
 /// let mut rolling_peak_to_peak: RollingPeakToPeak<f64> = RollingPeakToPeak::new(3);
 /// for i in 1..10{
 ///     rolling_peak_to_peak.update(i as f64);

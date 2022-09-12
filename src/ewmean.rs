@@ -8,8 +8,8 @@ use serde::{Deserialize, Serialize};
 /// * `alpha` - The closer `alpha` is to 1 the more the statistic will adapt to recent values. Default value is `0.5`.
 /// # Examples
 /// ```
-/// use online_statistics::ewmean::EWMean;
-/// use online_statistics::stats::Univariate;
+/// use watermill::ewmean::EWMean;
+/// use watermill::stats::Univariate;
 /// let mut running_ewmean: EWMean<f64> = EWMean::default();
 /// let data = vec![1., 3., 5., 4., 6., 8., 7., 9., 11.];
 /// for i in data.iter(){

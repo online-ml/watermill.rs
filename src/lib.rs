@@ -1,12 +1,12 @@
-//!# online-statistics
+//!# watermill
 //!
-//! `online-statistics` is crate for Blazingly fast, generic and serializable online statistics.
+//! `watermill` is crate for Blazingly fast, generic and serializable online statistics.
 //!
 //!## Quickstart
 //! Let's compute the online median and then serialize it:
 //!```
-//!use online_statistics::quantile::Quantile;
-//!use online_statistics::stats::Univariate;
+//!use watermill::quantile::Quantile;
+//!use watermill::stats::Univariate;
 //!let data = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
 //!let mut running_median: Quantile<f64> = Quantile::new(0.5_f64).unwrap();
 //!for x in data.iter() {
@@ -27,7 +27,7 @@
 //!Add the following line to your `cargo.toml`:
 //!```bash
 //![dependencies]
-//! online-statistics = "0.1.0"
+//! watermill = "0.1.0"
 //!```
 //!## Statistics available
 //!| Statistics                      | Revertable ?|

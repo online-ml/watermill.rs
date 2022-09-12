@@ -6,8 +6,8 @@ use serde::{Deserialize, Serialize};
 /// Running count.
 /// # Examples
 /// ```
-/// use online_statistics::stats::{Univariate, Revertable};
-/// use online_statistics::count::Count;
+/// use watermill::stats::{Univariate, Revertable};
+/// use watermill::count::Count;
 /// let mut running_count: Count<f64> = Count::new();
 /// for i in 1..10{
 ///     running_count.update(i as f64);

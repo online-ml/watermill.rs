@@ -9,8 +9,8 @@ use std::ops::{AddAssign, SubAssign};
 /// * `alpha` - The closer `alpha` is to 1 the more the statistic will adapt to recent values. Default value is `0.5`.
 /// # Examples
 /// ```
-/// use online_statistics::ewvariance::EWVariance;
-/// use online_statistics::stats::Univariate;
+/// use watermill::ewvariance::EWVariance;
+/// use watermill::stats::Univariate;
 /// let mut running_ewvariance: EWVariance<f64> = EWVariance::default();
 /// let data = vec![1., 3., 5., 4., 6., 8., 7., 9., 11.];
 /// for i in data.iter(){

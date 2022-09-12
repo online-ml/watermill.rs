@@ -16,9 +16,9 @@ use std::{
 /// # Examples
 /// ```
 ///
-/// use online_statistics::stats::{RollableUnivariate, Univariate};
-/// use online_statistics::sum::Sum;
-/// use online_statistics::rolling::Rolling;
+/// use watermill::stats::{RollableUnivariate, Univariate};
+/// use watermill::sum::Sum;
+/// use watermill::rolling::Rolling;
 /// let data = vec![9.,7.,3.,2.,6.,1., 8., 5., 4.];
 /// let mut running_sum: Sum<f64> = Sum::new();
 /// // We wrap `running_sum` inside the `Rolling` struct.
