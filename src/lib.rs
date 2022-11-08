@@ -49,6 +49,7 @@
 //!## Inspiration
 //!The `stats` module of the [`river`](https://github.com/online-ml/river) library in `Python` greatly inspired this crate.
 
+pub mod argmin;
 pub mod count;
 pub mod covariance;
 pub mod ewmean;
