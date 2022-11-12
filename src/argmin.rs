@@ -2,8 +2,76 @@ use crate::sorted_window::SortedWindow;
 use num::{Float, FromPrimitive};
 use std::ops::{AddAssign, SubAssign};
 
+use crate::count::Count;
+use crate::minimum::Min;
 use crate::stats::Univariate;
 use serde::{Deserialize, Serialize};
+
+/// Argmin.
+/// # Examples
+/// ```
+/// use watermill::argmin::ArgMin;
+/// use watermill::stats::Univariate;
+/// let mut argmin: ArgMin<f64> = ArgMin::new();
+/// for i in 0..=100{
+///     argmin.update(i as f64);
+///     //println!("{}", rolling_argmin.get());
+///     argmin.get();
+/// }
+/// assert_eq!(argmin.get(), 100.0);
+/// ```
+///
+
+#[derive(Serialize, Deserialize)]
+pub struct ArgMin<F: Float + FromPrimitive + AddAssign + SubAssign> {
+    min: Min<F>,
+    count: Count<F>,
+    argmin: usize,
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> ArgMin<F> {
+    pub fn new() -> Self {
+        Self {
+            min: Min::new(),
+            count: Count::new(),
+            argmin: 0,
+        }
+    }
+}
+impl<F> Default for ArgMin<F>
+where
+    F: Float + FromPrimitive + AddAssign + SubAssign,
+{
+    fn default() -> Self {
+        Self {
+            min: Min::new(),
+            count: Count::new(),
+            argmin: 0,
+        }
+    }
+}
+
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for ArgMin<F> {
+    fn update(&mut self, x: F) {
+        if self.count.get() == F::from_f64(0.).unwrap() {
+            self.min.update(x);
+            self.argmin = 0;
+            return;
+        }
+        let min = self.min.get();
+        self.min.update(x);
+        self.count.update(x);
+        if x < min {
+            self.argmin = self.count.get().to_usize().unwrap();
+        } else {
+            self.min.update(x);
+            self.argmin += 1;
+        }
+    }
+    fn get(&self) -> F {
+        F::from_usize(self.argmin).unwrap()
+    }
+}
 
 /// Rolling argmin.
 /// # Arguments
