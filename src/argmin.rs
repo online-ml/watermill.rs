@@ -58,8 +58,9 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
                     .sorted_window
                     .unsorted_window
                     .iter()
-                    .position(|&y| y == minimum)
-                    .unwrap();
+                    .rev()
+                    .position(|&y| y == x)
+                    .expect("Error: argmin not found");
             }
         } else {
             self.argmin = 0;
@@ -67,5 +68,23 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
     }
     fn get(&self) -> F {
         F::from_usize(self.argmin).unwrap()
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use std::vec;
+
+    #[test]
+    fn rolling_argmin_edge_case() {
+        use crate::argmin::RollingArgMin;
+        use crate::stats::Univariate;
+        let mut rolling_argmin: RollingArgMin<f64> = RollingArgMin::new(3);
+        let vec_test = vec![1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 1.5];
+        let vec_rolling_argmin = vec![0.0, 1.0, 2.0, 0.0, 0.0, 1.0, 2.0, 0.0];
+        for (test_value, truth) in vec_test.iter().zip(vec_rolling_argmin.iter()) {
+            rolling_argmin.update(*test_value as f64);
+            assert_eq!(rolling_argmin.get(), *truth);
+        }
     }
 }
