@@ -18,7 +18,7 @@ use serde::{Deserialize, Serialize};
 ///     //println!("{}", rolling_argmin.get());
 ///     argmin.get();
 /// }
-/// assert_eq!(argmin.get(), 100.0);
+/// assert_eq!(argmin.get(), 0.0);
 /// ```
 ///
 
@@ -63,9 +63,6 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for ArgMin<
         self.count.update(x);
         if x < min {
             self.argmin = self.count.get().to_usize().unwrap();
-        } else {
-            self.min.update(x);
-            self.argmin += 1;
         }
     }
     fn get(&self) -> F {
@@ -86,7 +83,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for ArgMin<
 ///     //println!("{}", rolling_argmin.get());
 ///     rolling_argmin.get();
 /// }
-/// assert_eq!(rolling_argmin.get(), 100.0);
+/// assert_eq!(rolling_argmin.get(), 0.0);
 /// ```
 ///
 
@@ -118,9 +115,10 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
 
         let minimum = self.sorted_window.front();
         self.sorted_window.push_back(x);
-        if x > minimum {
-            if self.argmin < self.sorted_window.len() - 1 {
-                self.argmin += 1;
+        let new_minimum = self.sorted_window.front();
+        if x > minimum && x > new_minimum {
+            if self.argmin > 0 {
+                self.argmin -= 1;
             } else {
                 self.argmin = self
                     .sorted_window
@@ -131,7 +129,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
                     .expect("Error: argmin not found");
             }
         } else {
-            self.argmin = 0;
+            self.argmin = self.sorted_window.len() - 1;
         }
     }
     fn get(&self) -> F {
@@ -149,9 +147,10 @@ mod test {
         use crate::stats::Univariate;
         let mut rolling_argmin: RollingArgMin<f64> = RollingArgMin::new(3);
         let vec_test = vec![1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 1.5];
-        let vec_rolling_argmin = vec![0.0, 1.0, 2.0, 0.0, 0.0, 1.0, 2.0, 0.0];
+        let vec_rolling_argmin = vec![0.0, 0.0, 0.0, 0.0, 2.0, 1.0, 0.0, 2.0];
         for (test_value, truth) in vec_test.iter().zip(vec_rolling_argmin.iter()) {
             rolling_argmin.update(*test_value as f64);
+            println!("{} {} {}", test_value, truth, rolling_argmin.get());
             assert_eq!(rolling_argmin.get(), *truth);
         }
     }
