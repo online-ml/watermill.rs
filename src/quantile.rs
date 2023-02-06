@@ -179,8 +179,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 *marker += *desired_marker;
             }
             self.adjust();
-            self.heights.sort_by(|x, y| x.partial_cmp(y).unwrap());
         }
+        self.heights.sort_by(|x, y| x.partial_cmp(y).unwrap());
     }
     fn get(&self) -> F {
         if self.heights_sorted {
@@ -192,6 +192,7 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Quantil
                 .min(length * self.q)
                 .to_usize()
                 .unwrap();
+
             self.heights[index]
         }
     }
@@ -305,6 +306,37 @@ mod test {
         let mut quantile = Quantile::new(0.25_f64).unwrap();
         for d in data.into_iter() {
             quantile.update(d);
+        }
+    }
+    #[test]
+    fn first_five_value() {
+        use crate::quantile::Quantile;
+        use crate::stats::Univariate;
+        let data: Vec<f64> = vec![5., 0., 0., 0., 0., 0., 0., 0.];
+        let good_value_001_quantile = vec![5., 0., 0., 0., 0., 0., 0., 0.];
+        let good_value_099_quantile = vec![
+            5.,
+            5.,
+            5.,
+            5.,
+            5.,
+            0.,
+            0.27777777777777773,
+            0.8275462962962963,
+        ];
+        let mut quantile = Quantile::new(0.01_f64).unwrap();
+        for (d, gt) in data
+            .clone()
+            .into_iter()
+            .zip(good_value_001_quantile.into_iter())
+        {
+            quantile.update(d);
+            assert_eq!(quantile.get(), gt);
+        }
+        let mut quantile = Quantile::new(0.99_f64).unwrap();
+        for (d, gt) in data.into_iter().zip(good_value_099_quantile.into_iter()) {
+            quantile.update(d);
+            assert_eq!(quantile.get(), gt);
         }
     }
 }
