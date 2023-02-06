@@ -1,5 +1,9 @@
 # Release
 
+## 0.1.1 2023-02-06
+- Fix iconsistent initialisation of `quantile::Quantile` estimates
+
+
 ## 0.1.0 - 2022-09-12
 
 - `online-statistics` is `watermill` now
