@@ -302,7 +302,7 @@ pub trait IterStatisticsExtend: Iterator {
     ///
     /// ```
     /// use watermill::iter::IterStatisticsExtend;
-    /// let vec_true: Vec<f64> = vec![9., 7., 7., 3., 3., 6., 6., 6., 5.];
+    /// let vec_true: Vec<f64> = vec![9., 9., 7., 7., 6., 6., 6., 6., 5.];
     /// let data: Vec<f64> = vec![9., 7., 3., 2., 6., 1., 8., 5., 4.];
     /// for (d, t) in data
     ///     .into_iter()
