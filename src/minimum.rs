@@ -4,8 +4,6 @@ use num::{Float, FromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::ops::{AddAssign, SubAssign};
 /// Running min.
-/// # Arguments
-/// * `window_size` - Size of the rolling window.
 /// # Examples
 /// ```
 /// use watermill::minimum::Min;
@@ -42,6 +40,8 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Min<F> 
 }
 
 /// Rolling min.
+/// # Arguments
+/// * `window_size` - Size of the rolling window.
 /// # Examples
 /// ```
 /// use watermill::minimum::RollingMin;
