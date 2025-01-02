@@ -21,9 +21,9 @@ use serde::{Deserialize, Serialize};
 /// assert_eq!(running_quantile.get(), 5.0);
 /// ```
 /// # References
-/// [^1]: [The P² Algorithm for Dynamic Univariateal Computing Calculation of Quantiles and Editor Histograms Without Storing Observations](https://www.cse.wustl.edu/~jain/papers/ftp/psqr.pdf)
+/// [^1]: [The P² Algorithm for Dynamic Calculation of Quantiles and Histograms Without Storing Observations](https://www.cse.wustl.edu/~jain/papers/ftp/psqr.pdf)
 ///
-/// [^2]: [P² quantile estimator: estimating the median without storing values](https://aakinshin.net/posts/p2-quantile-estimator/)
+/// [^2]: [P² quantile estimator: estimating the median without storing values](https://aakinshin.net/posts/p2-quantile-estimator-intro/)
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Quantile<F: Float + FromPrimitive + AddAssign + SubAssign> {
     q: F,

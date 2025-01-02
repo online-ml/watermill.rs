@@ -4,12 +4,11 @@ use std::{
     collections::VecDeque,
     ops::{AddAssign, SubAssign},
 };
-
 /// Generic wrapper for performing rolling computations.
 /// This can be wrapped around any struct which implements a `Univariate` and a `Revertable` and `RollableUnivariate`
 /// traits.
 /// Inputs to `update` are stored in a `VecDeque`. Elements of the queue are popped when the window is
-//  full.
+/// full.
 /// # Arguments
 /// * `to_roll` - A running statistics which implements `Univariate` and `Revertable` and `RollableUnivariate` trait.
 /// * `window_size` - Size of sliding window.
@@ -28,7 +27,6 @@ use std::{
 /// }
 /// assert_eq!(rolling_sum.get(), 9.0);
 /// ```
-
 pub struct Rolling<'a, F: Float + FromPrimitive + AddAssign + SubAssign> {
     to_roll: &'a mut dyn RollableUnivariate<F>,
     window_size: usize,
@@ -39,7 +37,7 @@ impl<'a, F: Float + FromPrimitive + AddAssign + SubAssign> Rolling<'a, F> {
     pub fn new(
         to_roll: &'a mut dyn RollableUnivariate<F>,
         window_size: usize,
-    ) -> Result<Self, &str> {
+    ) -> Result<Self, &'a str> {
         if window_size == 0 {
             return Err("Window size should not equals to 0");
         }
@@ -51,7 +49,7 @@ impl<'a, F: Float + FromPrimitive + AddAssign + SubAssign> Rolling<'a, F> {
     }
 }
 
-impl<'a, F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling<'_, F> {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling<'_, F> {
     fn update(&mut self, x: F) {
         if self.window.len() == self.window_size {
             // To handle the error, the program panics because returning the error type would change
