@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 /// Computes central moments using Welford's algorithm.
 /// # References
 /// [^1]: [Wikipedia article on algorithms for calculating variance](https://www.wikiwand.com/en/Algorithms_for_calculating_variance#/Covariance)
-#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct CentralMoments<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub delta: F,
     pub sum_delta: F,
@@ -22,8 +22,8 @@ pub struct CentralMoments<F: Float + FromPrimitive + AddAssign + SubAssign> {
     /// Sums of powers of differences from the mean order 4.
     pub count: Count<F>,
 }
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> CentralMoments<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for CentralMoments<F> {
+    fn default() -> Self {
         Self {
             delta: F::from_f64(0.).unwrap(),
             sum_delta: F::from_f64(0.).unwrap(),
@@ -33,6 +33,11 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> CentralMoments<F> {
             m4: F::from_f64(0.).unwrap(),
             count: Count::new(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> CentralMoments<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
     pub fn update_delta(&mut self, x: F) {
         self.delta = (x - self.sum_delta) / self.count.get()
