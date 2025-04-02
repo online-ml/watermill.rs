@@ -21,16 +21,21 @@ use serde::{Deserialize, Serialize};
 /// }
 /// assert_eq!(running_count.get(), 0.);
 ///```
-#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct Count<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub count: F,
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Count<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for Count<F> {
+    fn default() -> Self {
         Self {
             count: F::from_f64(0.0).unwrap(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Count<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 

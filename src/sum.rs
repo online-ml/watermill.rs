@@ -21,16 +21,21 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_sum.get(), 0.);
 /// ```
 ///
-#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct Sum<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub sum: F,
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Sum<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for Sum<F> {
+    fn default() -> Self {
         Self {
             sum: F::from_f64(0.0).unwrap(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Sum<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Sum<F> {

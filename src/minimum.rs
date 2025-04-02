@@ -15,16 +15,21 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_min.get(), 1.0);
 /// ```
 ///
-#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Min<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub min: F,
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Min<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for Min<F> {
+    fn default() -> Self {
         Self {
             min: F::max_value(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Min<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 

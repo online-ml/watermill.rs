@@ -28,17 +28,22 @@ use serde::{Deserialize, Serialize};
 /// [^2]: [Finch, T., 2009. Incremental calculation of weighted mean and variance. University of Cambridge, 4(11-5), pp.41-42.](https://fanf2.user.srcf.net/hermes/doc/antiforgery/stats.pdf)
 ///
 /// [^3]: [Chan, T.F., Golub, G.H. and LeVeque, R.J., 1983. Algorithms for computing the sample variance: Analysis and recommendations. The American Statistician, 37(3), pp.242-247.](https://amstat.tandfonline.com/doi/abs/10.1080/00031305.1983.10483115)
-#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Mean<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub mean: F,
     pub n: Count<F>,
 }
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> Mean<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for Mean<F> {
+    fn default() -> Self {
         Self {
             mean: F::from_f64(0.0).unwrap(),
             n: Count::new(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Mean<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 

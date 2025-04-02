@@ -16,18 +16,23 @@ use std::ops::{AddAssign, SubAssign};
 /// assert_eq!(running_peak_to_peak.get(), 8.0);
 /// ```
 ///
-#[derive(Copy, Clone, Default, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct PeakToPeak<F: Float + FromPrimitive + AddAssign + SubAssign> {
     pub min: Min<F>,
     pub max: Max<F>,
 }
 
-impl<F: Float + FromPrimitive + AddAssign + SubAssign> PeakToPeak<F> {
-    pub fn new() -> Self {
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> Default for PeakToPeak<F> {
+    fn default() -> Self {
         Self {
             min: Min::new(),
             max: Max::new(),
         }
+    }
+}
+impl<F: Float + FromPrimitive + AddAssign + SubAssign> PeakToPeak<F> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 
