@@ -74,3 +74,14 @@ impl<F: Float + FromPrimitive + AddAssign + SubAssign> Univariate<F> for Rolling
         self.sorted_window.front()
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn min_default() {
+        let mut min: Min<f64> = Min::default();
+        min.update(1.0);
+        assert_eq!(min.get(), 1.0);
+    }
+}
